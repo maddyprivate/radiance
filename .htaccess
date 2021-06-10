@@ -1,0 +1,75 @@
+Options -MultiViews -Indexes
+
+ 
+
+RewriteEngine On
+
+ 
+
+# Handle Authorization Header
+
+RewriteCond %{HTTP:Authorization} .
+
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+ 
+
+# Redirect Trailing Slashes If Not A Folder...
+
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteCond %{REQUEST_URI} (.+)/$
+
+RewriteRule ^ %1 [L,R=301]
+
+ 
+
+# Handle Front Controller...
+
+RewriteCond %{REQUEST_URI} !(\.css|\.ico|\.js|\.png|\.jpg|\.gif|robots\.txt|\.woff2|\.map|\.woff|\.ttf)$ [NC]
+
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteRule ^ index.php [L]
+
+ 
+
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteCond %{REQUEST_URI} !^/public/
+
+RewriteRule ^(css|js|images|plugins|img|fw)/(.*)$ public/$1/$2 [L,NC]
+
+<IfModule mod_rewrite.c>
+   
+    RewriteEngine On
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # Handle Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+
+</IfModule>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    # Removes index.php from ExpressionEngine URLs  
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php?url=$1 [PT,L]
+
+</IfModule>
+
