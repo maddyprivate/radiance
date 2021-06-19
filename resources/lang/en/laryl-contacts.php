@@ -17,17 +17,20 @@ return [
 
 	'table' => [
 		'serial'	=> '#',
+		'type'		=> 'Type',
 		'name'		=> 'Name',
 		'pan'		=> 'PAN',
 		'mobile'	=> 'Mobile',
 		'state'		=> 'State',
 		'gstin'		=> 'GSTIN',
+		'outstandingBal'		=> 'Outstanding',
 		'options'	=> 'Options',
 	],
 
 	'form' => [
 		'label' => [
 			'name'		=> 'Contact/Vendor Name',
+			'type'		=> 'Type',
 			'gstin'		=> 'GSTIN',
 			'country'	=> 'Country',
 			'state'		=> 'State',

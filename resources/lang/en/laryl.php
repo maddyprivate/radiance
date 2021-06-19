@@ -16,12 +16,14 @@ return [
 		'delete'        => '<i class="fa fa-trash" aria-hidden="true"></i>',
 		'show'          => '<i class="fa fa-eye" aria-hidden="true"></i>',
 		'edit'          => '<i class="fa fa-pencil" aria-hidden="true"></i>',
+		'payment'       => '<i class="fas fa-rupee-sign"></i>',
 	],
 
 	'tooltips' => [
 		'delete'        => 'Delete',
 		'show'          => 'Show',
 		'edit'          => 'Edit',
+		'payment'       => 'Payment',
 		'create'    	=> 'Create',
 		'back'    		=> 'Back',
 		'email'   		=> 'Email',

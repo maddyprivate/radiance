@@ -1,5 +1,7 @@
 @extends('layouts.backend')
-
+@section('header')
+<link rel="stylesheet" href="{{ asset('css/purchase-table.css') }}">
+@endsection
 @section('content')
 
 <section>
@@ -9,15 +11,15 @@
 				<div class="card">
 					<div class="card-header d-flex align-items-center row no-gutters">
 						<div class="col-6">
-							<h3 class="h4">@lang('laryl-invoices.heading.new')</h3>
+							<h3 class="h4">@lang('laryl-purchases.heading.new')</h3>
 						</div>
 						<div class="col-6 text-right">
-							<a href="{{ route('Invoices.invoices.index')  }}" class="bttn-plain">
-								@lang('laryl-invoices.buttons.back-to-invoices')
+							<a href="{{ route('Purchases.purchases.index')  }}" class="bttn-plain">
+								@lang('laryl-purchases.buttons.back-to-purchases')
 							</a>
 						</div>
 						<div class="col-12">
-							<h6 class="t-cap">{{ $invoice->businessName }}, <span id="placeoforigin">{{ $invoice->placeOfOrigin }}</span></h6>
+							<h6 class="t-cap">{{ $purchase->businessName }}, <span id="placeoforigin">{{ $purchase->placeOfOrigin }}</span></h6>
 						</div>
 					</div>
 					<div class="card-body">
@@ -26,20 +28,20 @@
 							<div class="row">
 								<div class="col-md-12 mx-auto">
 
-							<form id="newInvoiceForm" method="POST" action="{{ route('Invoices.invoices.store') }}">
+							<form id="newInvoiceForm" method="POST" action="{{ route('Purchases.purchases.store') }}">
 								@csrf
 						
 								<div class="form-group row">
 									<div class="col-md-3">
 										<div class="row">
-											<label for="serialNumber" class="col-md-12 col-form-label">@lang('laryl-invoices.form.label.invoiceSerial')</label>
+											<label for="serialNumber" class="col-md-12 col-form-label">@lang('laryl-purchases.form.label.purchaseSerial')</label>
 
-											<div class="col-4 mr-auto pr-0">
-												<input type="text" id="serialPrefix" class="form-control t-cap" name="serialPrefix" value={{ $invoice->serialPrefix }} readonly>
+											<div class="col-7 mr-auto pr-0">
+												<input type="text" id="serialPrefix" class="form-control t-cap" name="serialPrefix" value="{{ $purchase->serialPrefix }} "readonly>
 											</div>
 					
-											<div class="col-8 ml-auto">
-												<input id="serialNumber" type="text" class="form-control t-cap" name="serialNumber" value="{{ $invoice->serialNumber }}" readonly>
+											<div class="col-5 ml-auto">
+												<input id="serialNumber" type="text" class="form-control t-cap" name="serialNumber" value="{{ $purchase->serialNumber }}" readonly>
 											</div>
 		
 											@if ($errors->has('serialNumber'))
@@ -51,7 +53,7 @@
 									</div>
 									<div class="col-sm-6 col-md-3">
 										<div class="row">
-											<label for="issueDate" class="col-md-12 col-form-label">@lang('laryl-invoices.form.label.issueDate')</label>
+											<label for="issueDate" class="col-md-12 col-form-label">@lang('laryl-purchases.form.label.issueDate')</label>
 					
 											<div class="col-md-12">
 												<div id="date" data-name="issueDate" class="bfh-datepicker" data-input="form-control" data-min="01-01-2000" data-max="today"  data-format="y-m-d" data-date="today">
@@ -67,7 +69,7 @@
 									</div>
 									<div class="col-sm-6 col-md-3">
 										<div class="row">
-											<label for="dueDate" class="col-md-12 col-form-label">@lang('laryl-invoices.form.label.dueDate')</label>
+											<label for="dueDate" class="col-md-12 col-form-label">@lang('laryl-purchases.form.label.dueDate')</label>
 					
 											<div class="col-md-12">
 												<div id="duedate" data-name="dueDate" class="bfh-datepicker" data-min="01-01-2000" data-format="y-m-d" data-date="today">
@@ -83,7 +85,7 @@
 									</div>
 									<div class="col-sm-6 col-md-3">
 										<div class="row">
-											<label for="placeOfSupply" class="col-md-12 col-form-label">@lang('laryl-invoices.form.label.placeOfSupply')</label>
+											<label for="placeOfSupply" class="col-md-12 col-form-label">@lang('laryl-purchases.form.label.placeOfSupply')</label>
 					
 											<div class="col-md-12">
 												<select id="placeOfSupply" name="placeOfSupply" class="form-control bfh-states" data-country="India" data-state="{{ old('placeOfSupply') }}"></select>
@@ -103,46 +105,46 @@
 										<div class="row">
 											<div class="col-md-12">
 												<div class="row">
-													<label for="customerName" class="col-auto col-form-label">@lang('laryl-invoices.form.label.customerName')</label>
+													<label for="dealerName" class="col-auto col-form-label">@lang('laryl-purchases.form.label.dealerName')</label>
 			
 													<div class="col-md-12">
-														<input id="customerName" type="text" class="form-control t-cap" name="customer[name]" value="{{ old('customer.name') }}" autofocus>
+														<input id="dealerName" type="text" class="form-control t-cap" name="dealer[name]" value="{{ old('dealer.name') }}" autofocus>
 													</div>
 				
-													@if ($errors->has('customer.name'))
+													@if ($errors->has('dealer.name'))
 														<span class="col-md-12 form-error-message">
-															<small for="customer.name">{{ $errors->first('customer.name') }}</small>
+															<small for="dealer.name">{{ $errors->first('dealer.name') }}</small>
 														</span>
 													@endif
-													<input type="hidden" name="customer[customerId]" id="customerId" >
+													<input type="hidden" name="dealer[dealerId]" id="dealerId" >
 												</div>
 											</div>
 											<div class="col-sm-6 col-md-6">
 												<div class="row">
-													<label for="customerGstin" class="col-md-12 col-form-label">@lang('laryl-invoices.form.label.customerGstin')</label>
+													<label for="dealerGstin" class="col-md-12 col-form-label">@lang('laryl-purchases.form.label.dealerGstin')</label>
 		
 													<div class="col-md-12">
-														<input id="customerGstin" type="text" class="form-control t-up" name="customer[gstin]" value="{{ old('customer.gstin') }}" maxlength="15" >
+														<input id="dealerGstin" type="text" class="form-control t-up" name="dealer[gstin]" value="{{ old('dealer.gstin') }}" maxlength="15" >
 													</div>
 				
-													@if ($errors->has('customer.gstin'))
+													@if ($errors->has('dealer.gstin'))
 														<span class="col-md-12 form-error-message">
-															<small for="customer.gstin">{{ $errors->first('customer.gstin') }}</small>
+															<small for="dealer.gstin">{{ $errors->first('dealer.gstin') }}</small>
 														</span>
 													@endif
 												</div>												
 											</div>
 											<div class="col-sm-6 col-md-6">
 												<div class="row">
-													<label for="customerMobile" class="col-md-12 col-form-label">@lang('laryl-invoices.form.label.customerMobile')</label>
+													<label for="dealerMobile" class="col-md-12 col-form-label">@lang('laryl-purchases.form.label.dealerMobile')</label>
 		
 													<div class="col-md-12">
-														<input id="customerMobile" type="text" class="form-control t-up bfh-phone" data-country="India" name="customer[mobile]" value="{{ old('customer.mobile') }}" >
+														<input id="dealerMobile" type="text" class="form-control t-up bfh-phone" data-country="India" name="dealer[mobile]" value="{{ old('dealer.mobile') }}" >
 													</div>
 				
-													@if ($errors->has('customer.mobile'))
+													@if ($errors->has('dealer.mobile'))
 														<span class="col-md-12 form-error-message">
-															<small for="customer.mobile">{{ $errors->first('customer.mobile') }}</small>
+															<small for="dealer.mobile">{{ $errors->first('dealer.mobile') }}</small>
 														</span>
 													@endif
 												</div>												
@@ -154,12 +156,12 @@
 										<div class="row">
 											<div class="col-sm-6 col-md-6">
 												<div class="row">
-													<label for="billingAddress" class="col-auto col-form-label">@lang('laryl-invoices.form.label.billingAddress')</label>
+													<label for="billingAddress" class="col-auto col-form-label">@lang('laryl-purchases.form.label.billingAddress')</label>
 
 													<span id="billingaddress_edit" class="col-auto align-self-center ml-auto"><a data-remodal-target="editBillingAddress" href="javascript:;">Edit</a></span>
 			
 													<div class="col-md-12">
-														<textarea id="billingAddress" rows=4 class="form-control autosize t-cap" name="customer[billingAddress]" value="{{ old('billingAddress') }}" readonly></textarea>
+														<textarea id="billingAddress" rows=4 class="form-control autosize t-cap" name="dealer[billingAddress]" value="{{ old('billingAddress') }}" readonly></textarea>
 													</div>
 				
 													@if ($errors->has('billingAddress'))
@@ -171,12 +173,12 @@
 											</div>
 											<div class="col-sm-6 col-md-6">
 												<div class="row">
-													<label for="shippingAddress" class="col-auto col-form-label">@lang('laryl-invoices.form.label.shippingAddress')</label>
+													<label for="shippingAddress" class="col-auto col-form-label">@lang('laryl-purchases.form.label.shippingAddress')</label>
 
 													<span id="editShippingAddress" class="d-none col-auto align-self-center ml-auto"><a data-remodal-target="editShippingAddress" href="javascript:;">Edit</a></span>
 			
 													<div class="col-md-12">
-														<textarea id="shippingAddress" rows=4 class="form-control autosize t-cap" name="customer[shippingAddress]" value="{{ old('shippingAddress') }}" readonly></textarea>
+														<textarea id="shippingAddress" rows=4 class="form-control autosize t-cap" name="dealer[shippingAddress]" value="{{ old('shippingAddress') }}" readonly></textarea>
 													</div>
 				
 													@if ($errors->has('shippingAddress'))
@@ -188,8 +190,8 @@
 											</div>
 											<div class="col-auto ml-auto mt-3 form-group">
 												<div class="pure-checkbox">
-													<input name="customer[sameAsBilling]" type="text" value="off" hidden>
-													<input class="newinv_form_event" id="sameAsBilling" name="customer[sameAsBilling]" type="checkbox" checked="checked">
+													<input name="dealer[sameAsBilling]" type="text" value="off" hidden>
+													<input class="newinv_form_event" id="sameAsBilling" name="dealer[sameAsBilling]" type="checkbox" checked="checked">
 													<label for="sameAsBilling">Same as Billing Address</label>
 												</div>										
 											</div>
@@ -198,9 +200,9 @@
 								</div>
 								<div class="form-group row">
 									<div class="col-12">
-										<div class="invoice-products-table">
+										<div class="purchase-products-table">
 											<div class="table-body-scrollable">
-												<div class="table-responsive invoice-products-list-table">
+												<div class="table-responsive purchase-products-list-table">
 													<table id="table" class="table text-center">
 														<thead>
 															<tr>
@@ -241,17 +243,17 @@
 														</thead>
 														<tbody id="product-tbody">
 
-															<tr class="invoice-totals-row-scrollable">
+															<tr class="purchase-totals-row-scrollable">
 																<td colspan="5" class=""><a href="javascript:;" id="add-empty-row-button">+ Add another line</a></td>
 																<td colspan="2" class="">Total Inv. Val</td>
-																<td class="invoice-total-cell readonly-cell" id="taxableValue">
+																<td class="purchase-total-cell readonly-cell" id="taxableValue">
 																	<input type="text" 	class="table-cell-total" id="taxableValue" name="totalTaxablevalue" value="0.00" readonly>
 																</td>
 																<td colspan="1" class=""></td>
-																<td class="invoice-total-cell readonly-cell" id="totalCgstValue">
+																<td class="purchase-total-cell readonly-cell" id="totalCgstValue">
 																	<input type="text" 	class="table-cell-total" id="cgstValue" name="totalCgstvalue" value="0.00" readonly>
 																</td>
-																<td class="invoice-total-cell readonly-cell" id="sgstValue">
+																<td class="purchase-total-cell readonly-cell" id="sgstValue">
 																	<input type="text" 	class="table-cell-total" id="sgstValue" name="totalSgstvalue" value="0.00" readonly>
 																</td>	
 															</tr>
@@ -271,8 +273,8 @@
 															</tr>
 														</thead>
 														<tbody>
-															<tr class="invoice-totals-row-fixed">
-																<td class="invoice-total-cell readonly-cell" id="netValue">
+															<tr class="purchase-totals-row-fixed">
+																<td class="purchase-total-cell readonly-cell" id="netValue">
 																	<input type="text" 	class="table-cell-total" id="netValue" name="netValue" value="0.00" readonly>
 																</td>
 															</tr>
@@ -319,7 +321,7 @@
 								<div class="form-group row mt-5 mb-0">
 									<div class="col-12 col-md-4 mb-3 mb-md-0">
 										<div class="row">
-											<label for="otherCharges" class="col-auto col-form-label">@lang('laryl-invoices.form.label.otherCharges')</label>
+											<label for="otherCharges" class="col-auto col-form-label">@lang('laryl-purchases.form.label.otherCharges')</label>
 
 											<div class="col-md-12">
 												<input id="otherCharges" type="text" class="form-control digit-8" name="otherCharges" value="{{ old('otherCharges') ?? 0}}" autofocus onblur="setTotalsRow();finalRoundingoff();">
@@ -334,7 +336,7 @@
 									</div>
 									<div class="col-auto ml-auto my-auto">
 										<button type="submit" class="btn btn-success  ml-auto">
-											@lang('laryl-invoices.buttons.save-invoice')
+											@lang('laryl-purchases.buttons.save-purchase')
 										</button>
 									</div>
 								</div>
@@ -408,7 +410,7 @@
 </div>
 
 <script>
-	window.invoice_product_serial = 1;
+	window.purchase_product_serial = 1;
 	window.workingRowIndex = 0;
 
 	window.tableScrollable = $(".table-body-scrollable");
@@ -420,7 +422,7 @@
 
 		autosize($('textarea.autosize'));
 
-		//Declaring select customer remodal as JS obj. Used when closing the modal after customer selection
+		//Declaring select dealer remodal as JS obj. Used when closing the modal after dealer selection
 		var remodal_options = {
 			hashTracking: false, closeOnOutsideClick: false,
 		};
@@ -432,7 +434,7 @@
 
 </script>
 
-<script src="{{ asset('js/new-invoice.js') }}"></script>
+<script src="{{ asset('js/new-purchase.js') }}"></script>
 
 <script>
 	$('#newInvoiceForm').on('submit', function(e){

@@ -38,7 +38,7 @@
               <div class="info d-flex align-items-center">
                 <div class="content">
                   <div class="logo">
-                    <h1>Login - Radiance gas</h1>
+                    <h1>Login - Radiance Gas</h1>
                   </div>
                   <p>Billing System</p>
                 </div>

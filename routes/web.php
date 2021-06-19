@@ -53,6 +53,16 @@ Route::resource('contacts', 'Backend\ContactsController', [
     'page-heading'  =>  'CM',
 ])->middleware('AuthUser');
 
+Route::get('/customers', 'Backend\ContactsController@customer', [
+    'as'            => 'customers',
+    'page-heading'  => 'Costomers List'
+])->middleware('AuthUser');
+
+Route::get('/dealers', 'Backend\ContactsController@dealer', [
+    'as'            => 'Dealers',
+    'page-heading'  => 'Dealers List'
+])->middleware('AuthUser');
+
 Route::post('/products/uploadexcel', 'Backend\ProductsController@uploadexcel', [
 	'as'            => 'ProductsUpload',
 ])->middleware('AuthUser');
@@ -80,6 +90,50 @@ Route::get('/invoices/print/{id}/{copy}', [
 Route::resource('invoices', 'Backend\InvoicesController', [
     'as'            => 'Invoices',
 ])->middleware('AuthUser');
+
+Route::get('/purchases/select_dealer/{dealerName}', 'Backend\PurchasesController@selectDealer', [
+    'as'            => 'SelectDealer',
+])->middleware('AuthUser');
+
+Route::get('/purchases/select_product/{description}', 'Backend\PurchasesController@selectProduct', [
+    'as'            => 'SelectProduct',
+])->middleware('AuthUser');
+
+Route::get('/purchases/print/{id}/{copy}', [
+    'as'    => 'PrintPurchase',
+    'uses'  => 'Backend\PurchasesController@printpurchase',
+])->middleware('AuthUser');
+
+Route::resource('purchases', 'Backend\PurchasesController', [
+    'as'            => 'Purchases',
+])->middleware('AuthUser');
+
+Route::get('/dcs/select_customer/{customerName}', 'Backend\DcsController@selectCustomer', [
+    'as'            => 'SelectCustomer',
+])->middleware('AuthUser');
+Route::get('/dcs/select_product/{description}', 'Backend\InvoicesController@selectProduct', [
+    'as'            => 'SelectProduct',
+])->middleware('AuthUser');
+
+Route::get('/dcs/print/{id}/{copy}', [
+    'as'    => 'PrintDc',
+    'uses'  => 'Backend\DcsController@printdc',
+])->middleware('AuthUser');
+
+Route::resource('dcs', 'Backend\DcsController', [
+    'as'            => 'Dcs',
+])->middleware('AuthUser');
+
+Route::post('/payOutstandingBalance', [
+    'as'    => 'PayOutstandingBalance',
+    'uses'  => 'Backend\ContactsController@payOutstandingBalance',
+])->middleware('AuthUser');
+
+Route::post('/changeInvoiceStatus', [
+    'as'    => 'ChangeInvoiceStatus',
+    'uses'  => 'Backend\InvoicesController@changeInvoiceStatus',
+])->middleware('AuthUser');
+
 
 Route::resource('expenses', 'Backend\ExpensesController', [
     'as'            => 'Expenses',

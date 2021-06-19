@@ -28,30 +28,30 @@
 								</thead>
 								<tbody>
 									@php
-										$transaction_array = $transactions->toArray();
+									$transaction_array = $transactions->toArray();
 									@endphp
 									@if(count($transactions) > 0)
-										@foreach($transactions as $key => $transaction)
-											<tr>
-												<th class="scope-row">{{$key+1}}</th>
-												<td class="t-cap">{{$transaction['date']}}</td>
-												<td class="t-up">{{$transaction['account']}}</td>
-												<td class="t-up">{{$transaction['type']}}</td>
-												<td class="t-up">Rs. {{$transaction['amount']}}</td>
-												<td class="t-cap">{{$transaction['description']}}</td>
-												<td class="t-cap">{{$transaction['dr']}}</td>
-												<td class="t-cap">{{$transaction['cr']}}</td>
-												<td class="t-cap">{{$transaction['bal']}}</td>
-											</tr>
-										@endforeach
+									@foreach($transactions as $key => $transaction)
+									<tr>
+										<th class="scope-row">{{$key+1}}</th>
+										<td class="t-cap">{{$transaction['date']}}</td>
+										<td class="t-up">{{$transaction['account']}}</td>
+										<td class="t-up">{{$transaction['type']}}</td>
+										<td class="t-up">Rs. {{$transaction['amount']}}</td>
+										<td class="t-cap">{{$transaction['description']}}</td>
+										<td class="t-cap">{{$transaction['dr']}}</td>
+										<td class="t-cap">{{$transaction['cr']}}</td>
+										<td class="t-cap">{{$transaction['bal']}}</td>
+									</tr>
+									@endforeach
 									@else
-										<tr class="text-center">
-											<td colspan="7">@lang('laryl.messages.no-records')</td>
-										</tr>
+									<tr class="text-center">
+										<td colspan="7">@lang('laryl.messages.no-records')</td>
+									</tr>
 									@endif
 								</tbody>
 							</table>
-						{{-- table responsive --}}
+							{{-- table responsive --}}
 						</div> 
 						<div class="row">
 							<div class="col d-none d-sm-block">
@@ -69,30 +69,39 @@
 </section>
 @endsection
 @section('footer')
-	<script type="text/javascript">
-		$(document).ready(function() {
-		    $('#transTable').DataTable({
-		    	initComplete: function () {
-            this.api().columns().every( function () {
-                var column = this;
-                var select = $('<select><option value=""></option></select>')
-                    .appendTo( $(column.footer()).empty() )
-                    .on( 'change', function () {
-                        var val = $.fn.dataTable.util.escapeRegex(
-                            $(this).val()
-                        );
- 
-                        column
-                            .search( val ? '^'+val+'$' : '', true, false )
-                            .draw();
-                    } );
- 
-                column.data().unique().sort().each( function ( d, j ) {
-                    select.append( '<option value="'+d+'">'+d+'</option>' )
-                } );
-            } );
-        }
-		    });
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#transTable').DataTable( {
+			dom: 'Bfrtip',
+			buttons: [
+			'copyHtml5',
+			'excelHtml5',
+			'csvHtml5',
+			'pdfHtml5'
+			]
 		} );
-	</script>
+		/*$('#transTable').DataTable({
+			initComplete: function () {
+				this.api().columns().every( function () {
+					var column = this;
+					var select = $('<select><option value=""></option></select>')
+					.appendTo( $(column.footer()).empty() )
+					.on( 'change', function () {
+						var val = $.fn.dataTable.util.escapeRegex(
+							$(this).val()
+							);
+						
+						column
+						.search( val ? '^'+val+'$' : '', true, false )
+						.draw();
+					} );
+					
+					column.data().unique().sort().each( function ( d, j ) {
+						select.append( '<option value="'+d+'">'+d+'</option>' )
+					} );
+				} );
+			}
+		});*/
+	} );
+</script>
 @endsection

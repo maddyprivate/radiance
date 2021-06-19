@@ -3,13 +3,13 @@
 	
 	function setScrollableContent(i){
 		var tDate = moment(new Date()).format("YYYY-MM-DD")
-		scrollableContent = "<tr class=\"product-details-row-scrollable\" row-index=\"\"> <td class=\"product-detail-cell\" id=\"invoiceSerial\"> <input type=\"text\" class=\"table-cell-input text-center\" id=\"invoiceSerial\" name=\"invoiceProducts["+i+"][invoiceSerial]\" value=\"\" readonly> </td> <td class=\"product-detail-cell\" id=\"description\"> <input type=\"text\" class=\"table-cell-input\" id=\"description\" name=\"invoiceProducts["+i+"][description]\" value=\"\"><a href=\"javascript:;\" id=\"search_product\"><i class=\"fa fa-search\"></i></a> </td> <td class=\"product-detail-cell\" id=\"hsn\"> <input type=\"text\" class=\"table-cell-input\" id=\"hsn\" name=\"invoiceProducts["+i+"][hsn]\" value=\"\"> </td> <td class=\"product-detail-cell\" id=\"quantity\"> <input type=\"text\" class=\"table-cell-input\" id=\"quantity\" name=\"invoiceProducts["+i+"][quantity]\" value=\"1\"> </td> <td class=\"product-detail-cell\" id=\"unit\"> <select id=\"unit\" name=\"invoiceProducts["+i+"][unit]\" class=\"table-cell-input\"> <option value=\"NOS\">NOS</option><option value=\"BGS\">Bags</option><option value=\"Brass\">Brass</option><option value=\"BTL\">Bottles</option><option value=\"CAN\">Cans</option><option value=\"KG\">Kilograms</option><option value=\"LTR\">liter</option><option value=\"MTR\">Meter</option><option value=\"CH\">Chhota Hatti</option></select> </td> <td class=\"product-detail-cell\" id=\"saleValue\"> <input type=\"text\" class=\"table-cell-input\" id=\"saleValue\" name=\"invoiceProducts["+i+"][saleValue]\" value=\"\"> </td> <td class=\"product-detail-cell\" id=\"discountRate\" value=\"0.00\"> <input type=\"text\" class=\"table-cell-input\" id=\"discountRate\" name=\"invoiceProducts["+i+"][discountRate]\" value=\"0.00\"> </td> <td class=\"product-detail-cell d-none\" id=\"discountValue\"> <input type=\"text\" class=\"table-cell-input\" id=\"discountValue\" name=\"invoiceProducts["+i+"][discountValue]\" value=\"0.00\"> </td> <td class=\"product-detail-cell readonly-cell\" id=\"taxableValue\"> <input type=\"text\" class=\"table-cell-input\" id=\"taxableValue\" name=\"invoiceProducts["+i+"][taxableValue]\" value=\"0.00\" readonly> </td> <td class=\"product-detail-cell\" id=\"taxRate\"> <select name=\"invoiceProducts["+i+"][taxRate]\" id=\"taxRate\" class=\"table-cell-input\" > <option value=\"0.00\">0 %</option> <option value=\"0.10\">0.10 %</option> <option value=\"0.25\">0.25 %</option> <option value=\"3.00\">3.00 %</option> <option value=\"5.00\">5.00 %</option> <option value=\"12.00\">12.00 %</option> <option value=\"18.00\">18.00 %</option> <option value=\"28.00\">28.00 %</option> </select> </td> <td class=\"product-detail-cell readonly-cell\" id=\"cgstValue\"> <input type=\"text\" class=\"table-cell-input\" id=\"cgstValue\" name=\"invoiceProducts["+i+"][cgstValue]\" value=\"0.00\" readonly> <input type=\"text\" class=\"table-cell-input \" id=\"cgstRate\" name=\"invoiceProducts["+i+"][cgstRate]\" value=\"0\" readonly> </td> <td class=\"product-detail-cell readonly-cell\" id=\"sgstValue\"> <input type=\"text\" class=\"table-cell-input\" id=\"sgstValue\" name=\"invoiceProducts["+i+"][sgstValue]\" value=\"0.00\" readonly> <input type=\"text\" class=\"table-cell-input \" id=\"sgstRate\" name=\"invoiceProducts["+i+"][sgstRate]\" value=\"0\" readonly> </td></tr> ";
+		scrollableContent = "<tr class=\"product-details-row-scrollable\" row-index=\"\"> <td class=\"product-detail-cell\" id=\"purchaseSerial\"> <input type=\"text\" class=\"table-cell-input text-center\" id=\"purchaseSerial\" name=\"purchaseProducts["+i+"][purchaseSerial]\" value=\"\" readonly> </td> <td class=\"product-detail-cell\" id=\"description\"> <input type=\"text\" class=\"table-cell-input\" id=\"description\" name=\"purchaseProducts["+i+"][description]\" value=\"\"><a href=\"javascript:;\" id=\"search_product\"><i class=\"fa fa-search\"></i></a> </td> <td class=\"product-detail-cell\" id=\"hsn\"> <input type=\"text\" class=\"table-cell-input\" id=\"hsn\" name=\"purchaseProducts["+i+"][hsn]\" value=\"\"> </td> <td class=\"product-detail-cell\" id=\"quantity\"> <input type=\"text\" class=\"table-cell-input\" id=\"quantity\" name=\"purchaseProducts["+i+"][quantity]\" value=\"1\"> </td> <td class=\"product-detail-cell\" id=\"unit\"> <select id=\"unit\" name=\"purchaseProducts["+i+"][unit]\" class=\"table-cell-input\"> <option value=\"NOS\">NOS</option><option value=\"BGS\">Bags</option><option value=\"Brass\">Brass</option><option value=\"BTL\">Bottles</option><option value=\"CAN\">Cans</option><option value=\"KG\">Kilograms</option><option value=\"LTR\">liter</option><option value=\"MTR\">Meter</option><option value=\"CH\">Chhota Hatti</option></select> </td> <td class=\"product-detail-cell\" id=\"saleValue\"> <input type=\"text\" class=\"table-cell-input\" id=\"saleValue\" name=\"purchaseProducts["+i+"][saleValue]\" value=\"\"> </td> <td class=\"product-detail-cell\" id=\"discountRate\" value=\"0.00\"> <input type=\"text\" class=\"table-cell-input\" id=\"discountRate\" name=\"purchaseProducts["+i+"][discountRate]\" value=\"0.00\"> </td> <td class=\"product-detail-cell d-none\" id=\"discountValue\"> <input type=\"text\" class=\"table-cell-input\" id=\"discountValue\" name=\"purchaseProducts["+i+"][discountValue]\" value=\"0.00\"> </td> <td class=\"product-detail-cell readonly-cell\" id=\"taxableValue\"> <input type=\"text\" class=\"table-cell-input\" id=\"taxableValue\" name=\"purchaseProducts["+i+"][taxableValue]\" value=\"0.00\" readonly> </td> <td class=\"product-detail-cell\" id=\"taxRate\"> <select name=\"purchaseProducts["+i+"][taxRate]\" id=\"taxRate\" class=\"table-cell-input\" > <option value=\"0.00\">0 %</option> <option value=\"0.10\">0.10 %</option> <option value=\"0.25\">0.25 %</option> <option value=\"3.00\">3.00 %</option> <option value=\"5.00\">5.00 %</option> <option value=\"12.00\">12.00 %</option> <option value=\"18.00\">18.00 %</option> <option value=\"28.00\">28.00 %</option> </select> </td> <td class=\"product-detail-cell readonly-cell\" id=\"cgstValue\"> <input type=\"text\" class=\"table-cell-input\" id=\"cgstValue\" name=\"purchaseProducts["+i+"][cgstValue]\" value=\"0.00\" readonly> <input type=\"text\" class=\"table-cell-input \" id=\"cgstRate\" name=\"purchaseProducts["+i+"][cgstRate]\" value=\"0\" readonly> </td> <td class=\"product-detail-cell readonly-cell\" id=\"sgstValue\"> <input type=\"text\" class=\"table-cell-input\" id=\"sgstValue\" name=\"purchaseProducts["+i+"][sgstValue]\" value=\"0.00\" readonly> <input type=\"text\" class=\"table-cell-input \" id=\"sgstRate\" name=\"purchaseProducts["+i+"][sgstRate]\" value=\"0\" readonly> </td></tr> ";
 	}
 
 	var fixedContent =  "";
 	
 	function setFixedContent(i){
-		fixedContent = "<tr class=\"product-details-row-fixed\"> <td class=\"product-detail-cell readonly-cell\" id=\"grossvalue\" rowspan=\"1\"> <input type=\"text\" class=\"table-cell-input\" id=\"grossvalue\" name=\"invoiceProducts["+i+"][grossvalue]\" value=\"0.00\" readonly> </td> <td class=\"delete-row-cell\" colspan=\"1\" rowspan=\"1\"> <a href=\"javascript:;\" class=\"delete-row-link\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\"><g fill=\"none\" fill-rule=\"evenodd\"><path fill=\"#FFF\" d=\"M5.308 5.348l5.384 5.304\"></path><path stroke=\"#FF4949\" stroke-linecap=\"round\" d=\"M5.308 5.348l5.384 5.304\"></path><path fill=\"#FFF\" d=\"M10.692 5.348l-5.384 5.304\"></path><path stroke=\"#FF4949\" stroke-linecap=\"round\" d=\"M10.692 5.348l-5.384 5.304M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z\"></path></g></svg></a> </td> </tr>";
+		fixedContent = "<tr class=\"product-details-row-fixed\"> <td class=\"product-detail-cell readonly-cell\" id=\"grossvalue\" rowspan=\"1\"> <input type=\"text\" class=\"table-cell-input\" id=\"grossvalue\" name=\"purchaseProducts["+i+"][grossvalue]\" value=\"0.00\" readonly> </td> <td class=\"delete-row-cell\" colspan=\"1\" rowspan=\"1\"> <a href=\"javascript:;\" class=\"delete-row-link\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\"><g fill=\"none\" fill-rule=\"evenodd\"><path fill=\"#FFF\" d=\"M5.308 5.348l5.384 5.304\"></path><path stroke=\"#FF4949\" stroke-linecap=\"round\" d=\"M5.308 5.348l5.384 5.304\"></path><path fill=\"#FFF\" d=\"M10.692 5.348l-5.384 5.304\"></path><path stroke=\"#FF4949\" stroke-linecap=\"round\" d=\"M10.692 5.348l-5.384 5.304M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z\"></path></g></svg></a> </td> </tr>";
 	}
 	
 	// Below 3 functions - used to change and copy text in between billing and shipping address based on checkbox state
@@ -50,8 +50,8 @@
 
 	//************************************************************************************** */
 
-	//Customer selection - Autocomplte
-	$("input#customerName").autocomplete({
+	//Dealer selection - Autocomplte
+	$("input#dealerName").autocomplete({
 
 		valueKey:'name',
 		titleKey:'name',
@@ -62,7 +62,7 @@
 
 				if( q !== "") {
 					$.ajax({
-						url: baseURL+"/invoices/select_customer/"+encodeURIComponent(q),
+						url: baseURL+"/purchases/select_dealer/"+encodeURIComponent(q),
 						dataType : 'json',
 						success: function(resp){
 							add(resp.data);
@@ -73,12 +73,12 @@
 			},
 		],
 
-	}).on('selected.xdsoft', function(e, datum){ //on select of a customer in the select a customer modal
+	}).on('selected.xdsoft', function(e, datum){ //on select of a dealer in the select a dealer modal
 
-		//fill in the customer details on page
-		$('input#customerId').val(datum.id);
-		$('input#customerGstin').val(datum.gstin);
-		$('input#customerMobile').val(datum.mobile);
+		//fill in the dealer details on page
+		$('input#dealerId').val(datum.id);
+		$('input#dealerGstin').val(datum.gstin);
+		$('input#dealerMobile').val(datum.mobile);
 		$('select#placeOfSupply').attr('data-state', datum.state);
 		$('select#placeOfSupply').val(datum.state).change();
 		$('textarea#billingAddress').val($.grep([datum.address, datum.city, datum.state, datum.pincode], Boolean).join('\n'));
@@ -94,7 +94,7 @@
 	//************************************************************************************** */
 	//************************************************************************************** */
 	//*********************     Product selection - Autocomplete     *********************** */
-	//**************     on select of a invoice product in selct product modal     ********* */
+	//**************     on select of a purchase product in selct product modal     ********* */
 	//************************************************************************************** */
 	//************************************************************************************** */
 
@@ -116,7 +116,7 @@
 
 				if( q !== "") {
 					$.ajax({
-						url: baseURL+"/invoices/select_product/"+encodeURIComponent(q),
+						url: baseURL+"/purchases/select_product/"+encodeURIComponent(q),
 						dataType : 'json',
 						success: function(resp){
 							add(resp.data);
@@ -165,15 +165,15 @@
 
 		setAutocompleteOff();
 
-		setScrollableContent(invoice_product_serial);
+		setScrollableContent(purchase_product_serial);
 
-		setFixedContent(invoice_product_serial);
+		setFixedContent(purchase_product_serial);
 
-		$(".table-body-scrollable table tbody .invoice-totals-row-scrollable").before(scrollableContent);
-		$(".table-body-fixed table tbody .invoice-totals-row-fixed").before(fixedContent);
-		$('.table-body-scrollable table tbody tr.product-details-row-scrollable:last').attr('row-index', invoice_product_serial);
-		$('.table-body-fixed table tbody tr.product-details-row-fixed:last').attr('row-index', invoice_product_serial);
-		$('input#invoiceSerial:last').val(invoice_product_serial);
+		$(".table-body-scrollable table tbody .purchase-totals-row-scrollable").before(scrollableContent);
+		$(".table-body-fixed table tbody .purchase-totals-row-fixed").before(fixedContent);
+		$('.table-body-scrollable table tbody tr.product-details-row-scrollable:last').attr('row-index', purchase_product_serial);
+		$('.table-body-fixed table tbody tr.product-details-row-fixed:last').attr('row-index', purchase_product_serial);
+		$('input#purchaseSerial:last').val(purchase_product_serial);
 		// $("#eventregion_table").on('click','.bfh-datepicker',function() {
 		/*$('#product-tbody').find('.bfh-datepicker').each(function () {
 			var $datepicker;
@@ -182,7 +182,7 @@
 		});*/
 		setRowHeight();
 
-		invoice_product_serial++;
+		purchase_product_serial++;
 	}
 
 	function delete_productrow(row_id) {
@@ -199,9 +199,9 @@
 			$(this).attr('row-index', i+1);
 		});
 
-		$('input#invoiceSerial').each(function(i, obj) {
+		$('input#purchaseSerial').each(function(i, obj) {
 			$(this).val(i+1);
-			invoice_product_serial = i+2;
+			purchase_product_serial = i+2;
 		});
 	}
 
@@ -216,7 +216,7 @@
 		var rowId = $(this).parents('tr.product-details-row-fixed').attr('row-index');
 		delete_productrow(rowId);
 
-		invoice_product_serial = 1; // Since renumbering wont happen after deleting all rows in previous step, assinging value manually
+		purchase_product_serial = 1; // Since renumbering wont happen after deleting all rows in previous step, assinging value manually
 		renumber_productrow();
 		setTotalsRow();
 		finalRoundingoff();
@@ -289,9 +289,9 @@
 	});
 
 	$('input#amountRecieved').on('change', function(e){
-		setInvoiceStatus($(this).val());
+		setPurchaseStatus($(this).val());
 	});
-	$('select#invoiceStatus').on('change', function(e){
+	$('select#purchaseStatus').on('change', function(e){
 		setAmountRecieved($(this).val());
 	});
 
@@ -319,7 +319,7 @@
 
 	$(document).ready(function(){
 		// Making Products Table Scroll Horizontal
-		$('.invoice-products-list-table').hScroll(30);
+		$('.purchase-products-list-table').hScroll(30);
 	});
 
 	//************************************************************************************** */
@@ -350,7 +350,7 @@
 
 	function setRowHeight() {
 		$('tr.product-details-row-scrollable').each(function(i, obj) {
-			var sourceElement = $(this).find('td#invoiceSerial');
+			var sourceElement = $(this).find('td#purchaseSerial');
 			var sourceHeight = sourceElement.outerHeight( true );			
 			var rowIndex  = $(this).attr('row-index');
 			var destinyElement = tableFixed.find('tr.product-details-row-fixed[row-index='+rowIndex+'] td#grossvalue');
@@ -456,7 +456,7 @@
 	}
 
 	function setTotalsRow() {
-		var totalsRow = $('.invoice-totals-row-scrollable');
+		var totalsRow = $('.purchase-totals-row-scrollable');
 
 		var totalTaxableValue = 0;
 		var totalIgstValue = 0;
@@ -503,7 +503,7 @@
 		$('#roundOffValue').val((rounded_total - netValue).toFixed(2));
 	}
 
-	function setInvoiceStatus(amountRecieved) {
+	function setPurchaseStatus(amountRecieved) {
 
 		amountRecievedFloat = parseFloat(amountRecieved).toFixed(2);
 		$('input#amountRecieved').val(amountRecievedFloat);
@@ -511,23 +511,23 @@
 		amountRecieved = parseFloat(amountRecieved);
 		grandValue = parseFloat($('input#grandValue').val());
 
-		$('select#invoiceStatus').children('option[selected]').removeAttr('selected');
+		$('select#purchaseStatus').children('option[selected]').removeAttr('selected');
 
 		if(amountRecieved < 1){
-			$('select#invoiceStatus').val("unpaid").change();
+			$('select#purchaseStatus').val("unpaid").change();
 		}else if(amountRecieved < grandValue){
-			$('select#invoiceStatus').val("partial").change();
+			$('select#purchaseStatus').val("partial").change();
 		}else if(amountRecieved === grandValue){
-			$('select#invoiceStatus').val("paid").change();
+			$('select#purchaseStatus').val("paid").change();
 		}else if(amountRecieved > grandValue){
-			$('select#invoiceStatus').val("paid").change();
+			$('select#purchaseStatus').val("paid").change();
 		}
 		// if(amountRecieved < 1){
-		// 	$('select#invoiceStatus').children('option[value="unpaid"]').attr('selected', 'selected');
+		// 	$('select#purchaseStatus').children('option[value="unpaid"]').attr('selected', 'selected');
 		// }else if(amountRecieved < $('input#grandValue').val()){
-		// 	$('select#invoiceStatus').children('option[value="partial"]').attr('selected', 'selected');
+		// 	$('select#purchaseStatus').children('option[value="partial"]').attr('selected', 'selected');
 		// }else if(amountRecieved === $('input#amountRecieved').val()){
-		// 	$('select#invoiceStatus').children('option[value="paid"]').attr('selected', 'selected');
+		// 	$('select#purchaseStatus').children('option[value="paid"]').attr('selected', 'selected');
 		// }
 	}
 

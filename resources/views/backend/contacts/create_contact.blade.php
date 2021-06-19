@@ -24,19 +24,40 @@
 								<div class="col-md-12 mx-auto">
 									<form method="POST" action="{{ route('Contacts.contacts.store') }}">
 										@csrf
-								
 										<div class="form-group row">
-											<label for="name" class="col-md-12 col-form-label">@lang('laryl-contacts.form.label.name')</label>
-								
-											<div class="col-md-12">
-												<input id="name" type="text" class="form-control t-cap" name="name" value="{{ old('name') }}" autofocus>
-											</div>
+											<div class="col-md-6">
+												<div class="form-group row">
+													<label for="name" class="col-md-12 col-form-label">@lang('laryl-contacts.form.label.name')</label>
+										
+													<div class="col-md-12">
+														<input id="name" type="text" class="form-control t-cap" name="name" value="{{ old('name') }}" autofocus>
+													</div>
 
-											@if ($errors->has('name'))
-		                                        <span class="col-md-12 form-error-message">
-		                                            <small for="name">{{ $errors->first('name') }}</small>
-		                                        </span>
-											@endif
+													@if ($errors->has('name'))
+				                                        <span class="col-md-12 form-error-message">
+				                                            <small for="name">{{ $errors->first('name') }}</small>
+				                                        </span>
+													@endif
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group row">
+													<label for="type" class="col-md-12 col-form-label">@lang('laryl-contacts.form.label.type')</label>
+										
+													<div class="col-md-12">
+														<select id="type" type="text" class="form-control" name="type" >
+															<option value="customer">Customer</option>
+															<option value="dealer">Dealer</option>
+														</select> 
+													</div>
+
+													@if ($errors->has('type'))
+				                                        <span class="col-md-12 form-error-message">
+				                                            <small for="type">{{ $errors->first('type') }}</small>
+				                                        </span>
+													@endif
+												</div>
+											</div>
 										</div>
 
 										<div class="form-group row">

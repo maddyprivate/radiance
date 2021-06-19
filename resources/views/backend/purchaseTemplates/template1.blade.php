@@ -1,42 +1,42 @@
 <!doctype html>
 	<html lang="en">
 	<head>
-		<title>Invoice {{$serialPrefix.$serialNumber}} {{ucfirst($copy)}}</title>
-		<link href="{{ asset('/css/invoiceTemplate/template1.css') }}" rel="stylesheet">
+		<title>Purchase {{$serialPrefix.$serialNumber}} {{ucfirst($copy)}}</title>
+		<link href="{{ asset('/css/purchaseTemplate/template1.css') }}" rel="stylesheet">
 	</head>
 	<body class="template_2">
-		<htmlpageheader name="invoiceHeader">
+		<htmlpageheader name="purchaseHeader">
 			<div id="top_header">
-				@if($invoiceStatus === 'quote')
+				@if($purchaseStatus === 'quote')
 				Quotation
 				@else
 				<img src="{{asset('img/RadianceLogo.jpg')}}" height="12%" />
 				@endif
 			</div>
 		</htmlpageheader>
-		<htmlpagefooter name="invoiceFooter">
+		<htmlpagefooter name="purchaseFooter">
 			Page {PAGENO} of {nbpg}
 		</htmlpagefooter>
 		<div>
 			<table class="intro_info no_border">
 				<tbody>			
-					<tr class="invoice_for_row no_border">
-						@if($invoiceStatus != 'quote')
+					<tr class="purchase_for_row no_border">
+						@if($purchaseStatus != 'quote')
 						@if($copy === 'original')
-						<td class="invoice_for" colspan="4" ><img src="{{asset('img/invoice/Original.png')}}" height="50px" /></td>
+						<td class="purchase_for" colspan="4" ><img src="{{asset('img/invoice/Original.png')}}" height="50px" /></td>
 						@elseif($copy === 'duplicate')
-						<td class="invoice_for" colspan="4"><img src="{{asset('img/invoice/Duplicate.png')}}" height="50px" /></td>
+						<td class="purchase_for" colspan="4"><img src="{{asset('img/invoice/Duplicate.png')}}" height="50px" /></td>
 						@elseif($copy === 'triplicate')
-						<td class="invoice_for" colspan="4"><img src="{{asset('img/invoice/Triplicate.png')}}" height="50px" /></td>
+						<td class="purchase_for" colspan="4"><img src="{{asset('img/invoice/Triplicate.png')}}" height="50px" /></td>
 						@endif
 						@else
-						<td class="invoice_for" colspan="2"><img src="{{asset('img/invoice/Blank.png')}}" height="50px" /></td>
+						<td class="purchase_for" colspan="2"><img src="{{asset('img/invoice/Blank.png')}}" height="50px" /></td>
 						@endif
 					</tr>
-					<tr class="invoice_for_row no_border " >
+					<tr class="purchase_for_row no_border " >
 						<td style="text-align: center; padding-bottom:0px;padding-top:15px;" colspan="4">{{$profile['address']}}</td>
 					</tr>
-					<tr class="invoice_for_row no_border ">
+					<tr class="purchase_for_row no_border ">
 						<td style="text-align: center;padding-bottom:10px;" colspan="4">Contact on: +91 99218 90622 Or Mail on: tukaramnagargoje@gmail.com</td>
 					</tr>
 					<tr>
@@ -69,19 +69,19 @@
 								<table class="no_border no_row_border">
 									<tbody>
 										<tr class="triple_details">
-											<td>Invoice No</td>
+											<td>Purchase No</td>
 											<td>:</td>
-											<td><b>{{$serialPrefix.$serialNumber}}</b></td>
+											<td>{{$serialPrefix.$serialNumber}}</td>
 										</tr>
 										<tr>
-											<td>Invoice Date</td>
+											<td>Purchase Date</td>
 											<td>:</td>
 											<td>{{$issueDate}}</td>
 										</tr>
 										<tr>
 											<td>Place Of Supply</td>
 											<td>:</td>
-											<td><b>{{$placeOfSupply}}</b></td>
+											<td>{{$placeOfSupply}}</td>
 										</tr>
 										<tr>
 											<td>Due Date</td>
@@ -136,11 +136,11 @@
 	            					<td>Bill To :</td>
 	            				</tr>
 	            				<tr>
-	            					<td colspan="3"><b>{{$customer['name']}}<br />{{$customer['billingAddress']}}</b></td>
+	            					<td colspan="3">{{$dealer['name']}}<br />{{$dealer['billingAddress']}}<br /></td>
 	            				</tr>
 	            				<tr class="">
 	            					<td>GSTIN:</td>
-	            					<td><span class="t-up">{{$customer['gstin']}}</span></td>
+	            					<td><span class="t-up">{{$dealer['gstin']}}</span></td>
 	            				</tr>
 	            			</tbody>
 	            		</table>
@@ -152,7 +152,7 @@
 	            					<td>Ship To :</td>
 	            				</tr>
 	            				<tr>
-	            					<td colspan="3">{{$customer['name']}}<br />{{$customer['shippingAddress']}}<br /></td>
+	            					<td colspan="3">{{$dealer['name']}}<br />{{$dealer['shippingAddress']}}<br /></td>
 	            				</tr>
 	            			</tbody>
 	            		</table>
@@ -186,7 +186,7 @@
 	    	<tbody>
 	    		@foreach($product as $prod)
 	    		<tr class="product_row">
-	    			<td>{{$prod['invoiceSerial']}}</td>
+	    			<td>{{$prod['purchaseSerial']}}</td>
 	    			<td>{{$prod['description']}}</td>
 	    			<td>{{$prod['hsn']}}</td>
 	    			<td>{{$prod['quantity']}} {{$prod['unit']}}</td>

@@ -43,6 +43,7 @@
 	<link rel="stylesheet" href="{{ asset('css/dev-sign/style.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/invoice-table.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/jquery.dataTables.min.css') }}">
+	<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css">
 
 	<!-- Favicon-->
 	<link rel="shortcut icon" href="img/favicon.ico">
@@ -59,6 +60,7 @@
 	<!--[if lt IE 9]>
 				<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 				<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+					@yield('header')
 	<body>
 		<div class="page">
 			<!-- Main Navbar-->
@@ -75,7 +77,7 @@
 										<strong>Gas</strong>
 									</div>
 									<div class="brand-text brand-small">
-										<strong>SB</strong>
+										<strong>RGP</strong>
 									</div>
 								</a>
 								<!-- Toggle Button-->
@@ -122,19 +124,62 @@
 								<i class="fas fa-home"></i>Dashboard</a>
 						</li>
 						@if(Auth::user()->hasAnyRole(['admin', 'user']))
-						<li class="{{ isActiveRoute('Contacts.*') }}">
-							<a class="nav-link" href="{{ route('Contacts.contacts.index') }}">
-								<i class="far fa-address-book"></i>Contacts </a>
-						</li>
 						<li class="{{ isActiveRoute('Products.*') }}">
 							<a class="nav-link" href="{{ route('Products.products.index') }}">
 								<i class="fas fa-cookie-bite"></i>Products </a>
 						</li>
-						<li class="{{ isActiveRoute('Invoices.*') }}">
-							<a class="nav-link" href="{{ route('Invoices.invoices.index') }}">
-								<i class="fas fa-file-invoice-dollar"></i>Invoices </a>
+						<li class="{{ isActiveRoute('Contacts.*') }}">
+							<a href="#condown" aria-expanded="false" data-toggle="collapse">
+								<i class="fas fa-file-invoice-dollar"></i>Contacts
+							</a>
+							<ul id="condown" class="collapse list-unstyled ">
+								<li>
+									<a href="{{ url('customers') }}">Customers</a>
+								</li>
+								<li>
+									<a href="{{ url('dealers') }}">Dealers</a>
+								</li>
+							</ul>
 						</li>
-						
+						<li class="{{ isActiveRoute('Purchases.*') }}">
+							<a href="#purdown" aria-expanded="false" data-toggle="collapse">
+								<i class="fas fa-file-invoice-dollar"></i>Purchases
+							</a>
+							<ul id="purdown" class="collapse list-unstyled ">
+								<li>
+									<a href="{{ route('Purchases.purchases.create') }}">Create Purchase</a>
+								</li>
+								<li>
+									<a href="{{ route('Purchases.purchases.index') }}">List Purchase</a>
+								</li>
+							</ul>
+						</li>
+						<li class="{{ isActiveRoute('Invoices.*') }}">
+							<a href="#invdown" aria-expanded="false" data-toggle="collapse">
+								<i class="fas fa-file-invoice-dollar"></i>Invoices
+							</a>
+							<ul id="invdown" class="collapse list-unstyled ">
+								<li>
+									<a href="{{ route('Invoices.invoices.create') }}">Create Invoice</a>
+								</li>
+								<li>
+									<a href="{{ route('Invoices.invoices.index') }}">List Invoice</a>
+								</li>
+							</ul>
+						</li>
+						<li class="{{ isActiveRoute('Dcs.*') }}">
+							<a href="#dcdown" aria-expanded="false" data-toggle="collapse">
+								<i class="fas fa-file-invoice-dollar"></i>Dcs
+							</a>
+							<ul id="dcdown" class="collapse list-unstyled ">
+								<li>
+									<a href="{{ route('Dcs.dcs.create') }}">Create Dc</a>
+								</li>
+								<li>
+									<a href="{{ route('Dcs.dcs.index') }}">List Dc</a>
+								</li>
+							</ul>
+						</li>						
 						<li class="{{ isActiveRoute('Settings.*') }}">
 							<a href="#deedown" aria-expanded="false" data-toggle="collapse">
 								<i class="fa fa-cog"></i>Settings</a>
@@ -152,7 +197,8 @@
 						</li>
 						<li class="{{ isActiveRoute('Transactions.*') }}">
 							<a href="#transdown" aria-expanded="false" data-toggle="collapse">
-								<i class="far fa-money-bill-alt"></i></i>Transaction</a>
+								<i class="far fa-money-bill-alt"></i>Transaction
+							</a>
 							<ul id="transdown" class="collapse list-unstyled ">
 								<li>
 									<a href="{{ route('Expenses.expenses.index') }}">Expenses</a>
@@ -194,7 +240,7 @@
 						<div class="container-fluid">
 							<div class="row">
 								<div class="col-sm-6">
-									<p>RadianceLPG Petrochem PVT. LTD. © 
+									<p>Radiance Gas Buliding Material Suppliers. © 
 										<a class="designer" href="http://RadianceLPG.com" target=_blank>
 											<!-- <span class="icon-designer">
 												<span class="path2"></span>
@@ -215,7 +261,15 @@
 			</div>
 		</div>
 		<!-- JavaScript files-->		
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 		<script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+		<script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js" ></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js" ></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js" ></script>
+		<script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js" ></script>
+		<script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js" ></script>
 		<script src="{{ asset('fw/popper.js/umd/popper.min.js') }}"></script>
 		<script src="{{ asset('fw/bootstrap/js/bootstrap.min.js') }}"></script>
 		<script src="{{ asset('fw/numeric/jquery-numeric-1.3.1.js') }}"></script>

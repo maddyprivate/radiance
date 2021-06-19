@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Backend;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AceController\Controller;
 
+use App\Transaction;
+use App\Account;
 use App\Contact;
 
 use Rule;
@@ -26,7 +28,34 @@ class ContactsController extends Controller
 	public function index()
 	{
 		$contacts = Contact::paginate(10);
-		return view('backend.contacts.contacts_list', compact('contacts'));
+		$accounts = Account::get();
+		return view('backend.contacts.contacts_list', compact('contacts','accounts'));
+	}
+
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function customer()
+	{
+		request()->route()->setParameter('page-heading', 'Customers');
+		$contacts = Contact::where('type','customer')->paginate(10);
+		$accounts = Account::get();
+		return view('backend.contacts.contacts_list', compact('contacts','accounts'));
+	}
+
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function dealer()
+	{
+		request()->route()->setParameter('page-heading', 'Dealers');
+		$contacts = Contact::where('type','dealer')->paginate(10);
+		$accounts = Account::get();
+		return view('backend.contacts.contacts_list', compact('contacts','accounts'));
 	}
 
 	/**
@@ -58,7 +87,7 @@ class ContactsController extends Controller
 			'address'   => 'required',
 			'pincode'   => 'required',
 			'city'      => 'required',
-			'email'		=> 'required|string|email|max:255|unique:contacts',
+			// 'email'		=> 'required|string|email|max:255|unique:contacts',
 		);
 
 		$validator = Validator::make($request->all(), $rules);
@@ -161,5 +190,36 @@ class ContactsController extends Controller
 	public function destroy($id)
 	{
 		return redirect()->route('Contacts.contacts.show', $id);
+	}
+	public function payOutstandingBalance(Request $request)
+	{
+		$contact = Contact::find($request->id);
+		$balance = $contact->outstandingBalance - $request->outstandingPayment;
+		
+		$contact->outstandingBalance = $balance;
+		$contact->save();
+
+		$accounts = Account::find($request->account_id);
+		if($contact->type=='dealer')
+			$accounts->balance = $accounts->balance-$request->outstandingPayment;
+		else
+			$accounts->balance = $accounts->balance+$request->outstandingPayment;
+		
+		$accounts->save();
+
+		$transaction['payerid'] = $request->id;
+		$transaction['payeeid'] = $request->account_id;
+		$transaction['account'] = $accounts->accountName;
+		$transaction['type'] 	= 'Payment';
+		$transaction['amount'] = $request->outstandingPayment;
+		$transaction['description'] = $request->description;
+		$transaction['date'] = date('Y-m-d');
+		$transaction['cr'] = $request->outstandingPayment;
+		$transaction['bal'] = $accounts->balance;
+
+		$transfer = Transaction::create($transaction);
+
+		toast('Payment done Successfully!','success','top-right')->autoclose(3500);
+		return Redirect::to('contacts');
 	}
 }
