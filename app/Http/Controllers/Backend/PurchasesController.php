@@ -95,14 +95,14 @@ class PurchasesController extends Controller
 
 		$attributeNames = array(
 			'dealer.name' => 'Dealer Name',
-			'dealer.mobile' => 'Dealer Mobile',
+			// 'dealer.mobile' => 'Dealer Mobile',
 			'purchaseProducts.*.description' => 'purchase product description',
 		 );
 		
 		$rules = array(
 			'placeOfSupply'				=> 'required',
 			'dealer.name'				=> 'required',
-			'dealer.mobile'			=> 'required|regex:/\+91[[:space:]]\d{10}/',
+			// 'dealer.mobile'			=> 'required|regex:/\+91[[:space:]]\d{10}/',
 			'purchaseProducts.*.description'	=> 'required',
 		);
 
