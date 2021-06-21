@@ -167,7 +167,7 @@
 								</li>
 							</ul>
 						</li>
-						<li class="{{ isActiveRoute('Dcs.*') }}">
+						<!-- <li class="{{ isActiveRoute('Dcs.*') }}">
 							<a href="#dcdown" aria-expanded="false" data-toggle="collapse">
 								<i class="fas fa-file-invoice-dollar"></i>Dcs
 							</a>
@@ -179,7 +179,7 @@
 									<a href="{{ route('Dcs.dcs.index') }}">List Dc</a>
 								</li>
 							</ul>
-						</li>						
+						</li>	 -->					
 						<li class="{{ isActiveRoute('Settings.*') }}">
 							<a href="#deedown" aria-expanded="false" data-toggle="collapse">
 								<i class="fa fa-cog"></i>Settings</a>
