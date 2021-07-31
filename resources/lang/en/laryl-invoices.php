@@ -23,11 +23,14 @@ return [
 		'dueDate'			=> 'Due Date',
 		'invoiceStatus'		=> 'Invoice Status',
 		'grandValue'		=> 'Grand Total',
+		'customer'			=> 'Customer',
 		'options'			=> 'Options',
 	],
 
 	'form' => [
 		'label' => [
+			'otherCharges'		=> 'Other Charges',
+			'vehicleNo'			=> 'Vehicle No.',
 			'invoiceSerial'		=> 'Invoice Serial',
 			'issueDate'			=> 'Invoice Date',
 			'dueDate'			=> 'Invoice Due Date',

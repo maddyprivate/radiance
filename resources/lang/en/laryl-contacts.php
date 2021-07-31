@@ -22,6 +22,7 @@ return [
 		'mobile'	=> 'Mobile',
 		'state'		=> 'State',
 		'gstin'		=> 'GSTIN',
+		'outstandingBal'		=> 'Outstanding',
 		'options'	=> 'Options',
 	],
 
