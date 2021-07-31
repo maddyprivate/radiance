@@ -135,6 +135,12 @@ Route::post('/changeInvoiceStatus', [
 ])->middleware('AuthUser');
 
 
+Route::post('/changePurchaseStatus', [
+    'as'    => 'ChangePurchaseStatus',
+    'uses'  => 'Backend\PurchasesController@changePurchaseStatus',
+])->middleware('AuthUser');
+
+
 Route::resource('expenses', 'Backend\ExpensesController', [
     'as'            => 'Expenses',
 ])->middleware('AuthUser');
