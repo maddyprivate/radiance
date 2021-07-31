@@ -5,15 +5,10 @@
 		window.due_date_val;
 		
 		$('#date').on('change.bfhdatepicker', function(e) {
-					
 			var date = moment($('#date').val(), "YYYY-MM-DD");
-
 			var due_date = moment(date).add(30, 'day');
-
 			due_date_val = moment(due_date).format("YYYY-MM-DD");
-
 			$('input[name=dueDate]').val(due_date_val);
-			
 		});
 		
 		$('#dueDate').on('show.bfhdatepicker', function(e) {

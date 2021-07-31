@@ -171,51 +171,15 @@
 													
 													<div class="col-md-12">
 															<select id="unit" name="unit" class="form-control">
-																<option value="BOU">BOU</option>
+																<option value="NOS">NOS</option>
 																<option value="BGS">Bags</option>
-																<option value="BAL">Bale</option>
+																<option value="Brass">Brass</option>
 																<option value="BTL">Bottles</option>
-																<option value="BOX">Boxes</option>
-																<option value="BKL">Buckles</option>
-																<option value="BUN">Bunches</option>
-																<option value="BDL">Bundles</option>
 																<option value="CAN">Cans</option>
-																<option value="CARAT">Carat</option>
-																<option value="CTN">Cartons</option>
-																<option value="CMS">Centimeter</option>
-																<option value="CCM">Cubic Centimeter</option>
-																<option value="CBM">Cubic Meter</option>
-																<option value="DOZ">Dozen</option>
-																<option value="DRM">Drums</option>
-																<option value="GMS">Grams</option>
-																<option value="GGK">Great Gross</option>
-																<option value="GRS">Gross</option>
-																<option value="GYD">Gross Yards</option>
 																<option value="KG">Kilograms</option>
-																<option value="KLR">Kiloliter</option>
-																<option value="KME">Kilometers</option>
+																<option value="LTR">liter</option>
 																<option value="MTR">Meter</option>
-																<option value="MTS">Metric Ton</option>
-																<option value="MLT">Milliliters</option>
-																<option value="NOS">Numbers</option>
-																<option value="OTH">Others</option>
-																<option value="PAC">Packs</option>
-																<option value="PRS">Pairs</option>
-																<option value="PCS">Pieces</option>
-																<option value="QTL">Quintal</option>
-																<option value="ROL">Rolls</option>
-																<option value="SET">Sets</option>
-																<option value="SQF">Square Feet</option>
-																<option value="SQM">Square Meter</option>
-																<option value="SQY">Square Yards</option>
-																<option value="TBS">Tablets</option>
-																<option value="TGM">Ten Grams</option>
-																<option value="THD">Thousands</option>
-																<option value="TON">Tonnes</option>
-																<option value="TUB">Tubes</option>
-																<option value="UGS">US Gallons</option>
-																<option value="UNT">Units</option>
-																<option value="YDS">Yards</option>
+																<option value="CH">Chhota Hatti</option>
 															</select>
 													</div>
 

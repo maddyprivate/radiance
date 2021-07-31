@@ -17,8 +17,8 @@
 	marks: none ;
 	/*crop | cross | none*/
 	
-	/* header: html_invoiceHeader; */
-	footer: html_invoiceFooter;
+	/* header: html_dcHeader; */
+	footer: html_dcFooter;
 	/* background: ;
 	background-image: ;
 	background-position ;
@@ -28,7 +28,7 @@
 }
 
 @page :first {
-    header: html_invoiceHeader;
+    header: html_dcHeader;
 }
 
 @page :right {
@@ -77,7 +77,7 @@ table {
 }
 
 /* ---------- Top Left Corner box - attached as image ---------- */
-.invoice_for{
+.dc_for{
 	text-align: right;
 	padding-bottom: 0.5cm;
 }

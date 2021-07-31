@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Invoice;
-use App\InvoiceCustomer;
-use App\InvoiceProduct;
-use App\InvoiceSetting;
+use App\Purchase;
+use App\PurchaseDealer;
+use App\PurchaseProduct;
+use App\PurchaseSetting;
 use App\ProfileSetting;
 use App\Contact;
 use App\Product;
@@ -19,11 +19,11 @@ use PDF;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AceController\Controller;
 
-class InvoicesController extends Controller
+class PurchasesController extends Controller
 {
 	public function __construct(Request $request)
 	{
-		$request->route()->setParameter('page-heading', 'Invoices');		
+		$request->route()->setParameter('page-heading', 'Purchases');		
 	}
 	/**
 	 * Display a listing of the resource.
@@ -32,9 +32,9 @@ class InvoicesController extends Controller
 	 */
 	public function index()
 	{
-		$invoices = Invoice::paginate(10);
+		$purchases = Purchase::paginate(10);
 
-		return view('backend.invoices.invoices_list', compact('invoices'));
+		return view('backend.purchases.purchases_list', compact('purchases'));
 	}
 
 	/**
@@ -44,43 +44,43 @@ class InvoicesController extends Controller
 	 */
 	public function create()
 	{
-		$invoiceSettings = InvoiceSetting::find(1);
+		$purchaseSettings = PurchaseSetting::find(1);
 
-		$invoice['serialPrefix'] = $invoiceSettings['serialPrefix'];
+		$purchase['serialPrefix'] = $purchaseSettings['serialPrefix'];
 
-		// Finding the invoices with set prefix
-		$invoicesCreated = Invoice::where('serialPrefix', $invoiceSettings['serialPrefix'])->get();
-		// $invoicesCreatedCount = Invoice::count('serialPrefix', $invoiceSettings['serialPrefix']);
-		$invoicesCreatedCount = $invoicesCreated->count();
+		// Finding the purchases with set prefix
+		$purchasesCreated = Purchase::where('serialPrefix', $purchaseSettings['serialPrefix'])->get();
+		// $purchasesCreatedCount = Purchase::count('serialPrefix', $purchaseSettings['serialPrefix']);
+		$purchasesCreatedCount = $purchasesCreated->count();
 
-		if($invoicesCreatedCount) {
+		if($purchasesCreatedCount) {
 
 			// Assuming the last user serial is the the one which is set in settings
-			$serialNumberLastUsed = $invoiceSettings['serialNumberStart'];
+			$serialNumberLastUsed = $purchaseSettings['serialNumberStart'];
 
 			// Finding the greatest number under used serials with the prefix from settings
-			foreach($invoicesCreated as $invoiceCreated) {
-				if($invoiceCreated['serialNumber'] > $serialNumberLastUsed) {
-					$serialNumberLastUsed = $invoiceCreated['serialNumber'];
+			foreach($purchasesCreated as $purchaseCreated) {
+				if($purchaseCreated['serialNumber'] > $serialNumberLastUsed) {
+					$serialNumberLastUsed = $purchaseCreated['serialNumber'];
 				}
 			}
 
-			$invoice['serialNumber'] = str_pad(intval($serialNumberLastUsed) + 1, strlen($invoiceSettings['serialNumberStart']), '0', STR_PAD_LEFT);
+			$purchase['serialNumber'] = str_pad(intval($serialNumberLastUsed) + 1, strlen($purchaseSettings['serialNumberStart']), '0', STR_PAD_LEFT);
 
 		} else {
 
-			$invoice['serialNumber'] = $invoiceSettings['serialNumberStart'];
+			$purchase['serialNumber'] = $purchaseSettings['serialNumberStart'];
 
 		}
 
 		$profileSettings = ProfileSetting::find(1);
 
-		$invoice['placeOfOrigin'] = $profileSettings['placeOfOrigin'];
-		$invoice['businessName'] = $profileSettings['businessName'];
+		$purchase['placeOfOrigin'] = $profileSettings['placeOfOrigin'];
+		$purchase['businessName'] = $profileSettings['businessName'];
 
-		$invoice = (object) $invoice;
-		clock($invoice);
-		return view('backend.invoices.create_invoice', compact('invoice'));
+		$purchase = (object) $purchase;
+		clock($purchase);
+		return view('backend.purchases.create_purchase', compact('purchase'));
 	}
 
 	/**
@@ -94,16 +94,16 @@ class InvoicesController extends Controller
 		clock($request->all());
 
 		$attributeNames = array(
-			'customer.name' => 'Customer Name',
-			'customer.mobile' => 'Customer Mobile',
-			'invoiceProducts.*.description' => 'invoice product description',
+			'dealer.name' => 'Dealer Name',
+			// 'dealer.mobile' => 'Dealer Mobile',
+			'purchaseProducts.*.description' => 'purchase product description',
 		 );
 		
 		$rules = array(
 			'placeOfSupply'				=> 'required',
-			'customer.name'				=> 'required',
-			'customer.mobile'			=> 'required|regex:/\+91[[:space:]]\d{10}/',
-			'invoiceProducts.*.description'	=> 'required',
+			'dealer.name'				=> 'required',
+			// 'dealer.mobile'			=> 'required|regex:/\+91[[:space:]]\d{10}/',
+			'purchaseProducts.*.description'	=> 'required',
 		);
 
 		$validator = Validator::make($request->all(), $rules);
@@ -117,30 +117,30 @@ class InvoicesController extends Controller
 			), 400);
 
 		} else {
-			$invoiceData = $request->except('customer', 'invoiceProducts', '_token','customerId');
-			$invoiceCustomerData = $request->input('customer');
-			$invoiceProductsData = $request->input('invoiceProducts');
+			$purchaseData = $request->except('dealer', 'purchaseProducts', '_token','dealerId');
+			$purchaseDealerData = $request->input('dealer');
+			$purchaseProductsData = $request->input('purchaseProducts');
 
-			$invoice = Invoice::updateOrCreate(['serialPrefix' => $request->input('serialPrefix'), 'serialNumber' => $request->input('serialNumber')], $invoiceData);
-			$invoice->save();
+			$purchase = Purchase::updateOrCreate(['serialPrefix' => $request->input('serialPrefix'), 'serialNumber' => $request->input('serialNumber')], $purchaseData);
+			$purchase->save();
 
-			$invoiceCustomer = InvoiceCustomer::updateOrCreate(['invoice_id' => $invoice['id']], $invoiceCustomerData);
-			$invoice->customer()->save($invoiceCustomer);
+			$purchaseDealer = PurchaseDealer::updateOrCreate(['purchase_id' => $purchase['id']], $purchaseDealerData);
+			$purchase->dealer()->save($purchaseDealer);
 
-			foreach($invoiceProductsData as $invoiceProduct){
-				$invoiceProduct = InvoiceProduct::updateOrCreate(['invoice_id' => $invoice['id'], 'invoiceSerial' => $invoiceProduct['invoiceSerial']], $invoiceProduct);
-				$invoice->product()->save($invoiceProduct);
+			foreach($purchaseProductsData as $purchaseProduct){
+				$purchaseProduct = PurchaseProduct::updateOrCreate(['purchase_id' => $purchase['id'], 'purchaseSerial' => $purchaseProduct['purchaseSerial']], $purchaseProduct);
+				$purchase->product()->save($purchaseProduct);
 
-				$invoiceProductIds[] = $invoiceProduct['invoiceSerial'];
+				$purchaseProductIds[] = $purchaseProduct['purchaseSerial'];
 			}
 
-			$deleteMissingProducts = InvoiceProduct::where('invoice_id', $invoice['id'])
-						->whereNotIn('invoiceSerial', $invoiceProductIds)
+			$deleteMissingProducts = PurchaseProduct::where('purchase_id', $purchase['id'])
+						->whereNotIn('purchaseSerial', $purchaseProductIds)
 						->delete();
-			$customer = Contact::find($invoiceCustomerData['customerId']);
-			$balance = $customer->outstandingBalance+$request->input('grandValue');
-			$customer->outstandingBalance = $balance;
-			$customer->save();
+			$dealer = Contact::find($purchaseDealerData['dealerId']);
+			$balance = $dealer->outstandingBalance+$request->input('grandValue');
+			$dealer->outstandingBalance = $balance;
+			$dealer->save();
 			return Response::json(array('status' => 1), 200);
 		}
 	}
@@ -153,22 +153,22 @@ class InvoicesController extends Controller
 	 */
 	public function show($id)
 	{
-		$invoice = Invoice::with('customer', 'product')->find($id);
+		$purchase = Purchase::with('dealer', 'product')->find($id);
 
-		$amountInWords = $this->amountToWords($invoice['grandValue']);
-		$invoice['amountInWords'] = $amountInWords;
+		$amountInWords = $this->amountToWords($purchase['grandValue']);
+		$purchase['amountInWords'] = $amountInWords;
 
 		$profileSettings = ProfileSetting::find(1);
-		$invoice['profile'] = $profileSettings;
+		$purchase['profile'] = $profileSettings;
 
-		$invoiceSettings = InvoiceSetting::find(1);
-		$invoice['invoice'] = $invoiceSettings;
+		$purchaseSettings = PurchaseSetting::find(1);
+		$purchase['purchase'] = $purchaseSettings;
 
-		$invoice = (object) $invoice;
+		$purchase = (object) $purchase;
 
-		clock($invoice);
+		clock($purchase);
 
-		return view('backend.invoices.view_invoice', compact('invoice'));
+		return view('backend.purchases.view_purchase', compact('purchase'));
 	}
 
 	public function amountToWords(float $amount){
@@ -290,19 +290,19 @@ class InvoicesController extends Controller
 	 */
 	public function edit($id)
 	{
-		$invoice = Invoice::with('customer', 'product')->find($id);
+		$purchase = Purchase::with('dealer', 'product')->find($id);
 
 		$profileSettings = ProfileSetting::find(1);
-		$invoice['profile'] = $profileSettings;
+		$purchase['profile'] = $profileSettings;
 
-		$invoiceSettings = InvoiceSetting::find(1);
-		$invoice['invoice'] = $invoiceSettings;
+		$purchaseSettings = PurchaseSetting::find(1);
+		$purchase['purchase'] = $purchaseSettings;
 
-		$invoice = (object) $invoice;
+		$purchase = (object) $purchase;
 
-		clock($invoice);
+		clock($purchase);
 
-		return view('backend.invoices.edit_invoice', compact('invoice'));
+		return view('backend.purchases.edit_purchase', compact('purchase'));
 	}
 
 	/**
@@ -315,16 +315,16 @@ class InvoicesController extends Controller
 	public function update(Request $request, $id)
 	{
 		$attributeNames = array(
-			'customer.name' => 'Customer Name',
-			'customer.mobile' => 'Customer Mobile',
-			'invoiceProducts.*.description' => 'invoice product description',
+			'dealer.name' => 'Dealer Name',
+			'dealer.mobile' => 'Dealer Mobile',
+			'purchaseProducts.*.description' => 'purchase product description',
 		 );
 		
 		$rules = array(
 			'placeOfSupply'				=> 'required',
-			'customer.name'				=> 'required',
-			'customer.mobile'			=> 'required|regex:/\+91[[:space:]]\d{10}/',
-			'invoiceProducts.*.description'	=> 'required',
+			'dealer.name'				=> 'required',
+			'dealer.mobile'			=> 'required|regex:/\+91[[:space:]]\d{10}/',
+			'purchaseProducts.*.description'	=> 'required',
 		);
 
 		$validator = Validator::make($request->all(), $rules);
@@ -339,30 +339,30 @@ class InvoicesController extends Controller
 
 		} else {
 
-			$invoiceData = $request->except('customer', 'invoiceProducts', '_token', '_method','customerId');
-			$invoiceCustomerData = $request->input('customer');
-			$invoiceProductsData = $request->input('invoiceProducts');
+			$purchaseData = $request->except('dealer', 'purchaseProducts', '_token', '_method','dealerId');
+			$purchaseDealerData = $request->input('dealer');
+			$purchaseProductsData = $request->input('purchaseProducts');
 
-			$invoice = Invoice::with('customer')->find($id);
-			$prevBalance = $invoice->grandValue;
-			Invoice::whereId($id)->update($invoiceData);
+			$purchase = Purchase::with('dealer')->find($id);
+			$prevBalance = $purchase->grandValue;
+			Purchase::whereId($id)->update($purchaseData);
 
-			$invoice->customer->update($invoiceCustomerData);
+			$purchase->dealer->update($purchaseDealerData);
 
-			foreach($invoiceProductsData as $invoiceProduct){
-				$invoice->product()->where('invoiceSerial', $invoiceProduct['invoiceSerial'])->updateOrCreate(['invoice_id' => $invoice['id'], 'invoiceSerial' => $invoiceProduct['invoiceSerial']], $invoiceProduct);
+			foreach($purchaseProductsData as $purchaseProduct){
+				$purchase->product()->where('purchaseSerial', $purchaseProduct['purchaseSerial'])->updateOrCreate(['purchase_id' => $purchase['id'], 'purchaseSerial' => $purchaseProduct['purchaseSerial']], $purchaseProduct);
 
-				$invoiceProductIds[] = $invoiceProduct['invoiceSerial'];
+				$purchaseProductIds[] = $purchaseProduct['purchaseSerial'];
 			}
 
-			$deleteMissingProducts = InvoiceProduct::where('invoice_id', $invoice['id'])
-						->whereNotIn('invoiceSerial', $invoiceProductIds)
+			$deleteMissingProducts = PurchaseProduct::where('purchase_id', $purchase['id'])
+						->whereNotIn('purchaseSerial', $purchaseProductIds)
 						->delete();
 						
-			$customer = Contact::find($invoiceCustomerData['customerId']);
-			$balance = $customer->outstandingBalance+$request->input('grandValue')-$prevBalance;
-			$customer->outstandingBalance = $balance;
-			$customer->save();
+			$dealer = Contact::find($purchaseDealerData['dealerId']);
+			$balance = $dealer->outstandingBalance+$request->input('grandValue')-$prevBalance;
+			$dealer->outstandingBalance = $balance;
+			$dealer->save();
 			return Response::json(array('status' => 1), 200);
 		}
 	}
@@ -378,12 +378,12 @@ class InvoicesController extends Controller
 		//
 	}
 
-	public function selectCustomer($customerName)
+	public function selectDealer($dealerName)
 	{
-		clock($customerName);
-		$customer = Contact::where('name', 'like', '%'.$customerName.'%')->where('type','customer')->get();
+		clock($dealerName);
+		$dealer = Contact::where('name', 'like', '%'.$dealerName.'%')->where('type','dealer')->get();
 		$return = array(
-			'data' => $customer
+			'data' => $dealer
 		);
 		clock($return);
 		echo json_encode($return);
@@ -404,40 +404,40 @@ class InvoicesController extends Controller
 		echo json_encode($return);
 	}
 
-	public function printinvoice($id, $copy)
+	public function printpurchase($id, $copy)
 	{
-		$invoice = Invoice::with('customer', 'product')->find($id);
+		$purchase = Purchase::with('dealer', 'product')->find($id);
 
-		$amountInWords = $this->amountToWords($invoice['grandValue']);
-		$invoice['amountInWords'] = $amountInWords;
+		$amountInWords = $this->amountToWords($purchase['grandValue']);
+		$purchase['amountInWords'] = $amountInWords;
 
 		$profileSettings = ProfileSetting::find(1);
-		$invoice['profile'] = $profileSettings;
+		$purchase['profile'] = $profileSettings;
 
-		$invoiceSettings = InvoiceSetting::find(1);
-		$invoice['invoice'] = $invoiceSettings;
+		$purchaseSettings = PurchaseSetting::find(1);
+		$purchase['purchase'] = $purchaseSettings;
 
-		$invoice['copy'] = $copy;
+		$purchase['copy'] = $copy;
 
-		$invoice = (object) $invoice;
+		$purchase = (object) $purchase;
 		if($copy=='DC'){	
-			$pdf = PDF::loadView('backend.invoiceTemplates.DC', $invoice);
-			return $pdf->stream($invoice['serialPrefix'].$invoice['serialNumber'].'_'.ucfirst($copy).'.pdf');
+			$pdf = PDF::loadView('backend.purchaseTemplates.DC', $purchase);
+			return $pdf->stream($purchase['serialPrefix'].$purchase['serialNumber'].'_'.ucfirst($copy).'.pdf');
 		} else {
-			$pdf = PDF::loadView('backend.invoiceTemplates.template1', $invoice);
-			return $pdf->stream($invoice['serialPrefix'].$invoice['serialNumber'].'_'.ucfirst($copy).'.pdf');
+			$pdf = PDF::loadView('backend.purchaseTemplates.template1', $purchase);
+			return $pdf->stream($purchase['serialPrefix'].$purchase['serialNumber'].'_'.ucfirst($copy).'.pdf');
 		}
 
 	}
-	public function changeInvoiceStatus(Request $request)
+	public function changePurchaseStatus(Request $request)
 	{
 		// dd($request->all());
-		$invoice = Invoice::find($request->id);
-		// dd($invoice);
-		$invoice->invoiceStatus = $request->invoiceStatus;
-		$invoice->save();
+		$purchase = Purchase::find($request->id);
+		// dd($purchase);
+		$purchase->purchaseStatus = $request->purchaseStatus;
+		$purchase->save();
 		toast('Status changed Successfully!','success','top-right')->autoclose(3500);
-		return Redirect::to('invoices');
+		return Redirect::to('purchases');
 	}
 
 }

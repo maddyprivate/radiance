@@ -45,13 +45,14 @@ class AccountsSettingsController extends Controller
     public function store(Request $request)
     {
         $rules = array(
-            'bankName'          => 'required|string|max:255',
+            'accountName'       => 'required|string|max:255',
+            /*'bankName'          => 'required|string|max:255',
             'accountNo'         => 'required|string|max:255',
             'balance'           => 'required',
             'ifscCode'          => 'required',
             'address'           => 'required|string|max:500',
             'branch'            => 'required|string|max:255',
-            'description'       => 'required|string|max:255',            
+            'description'       => 'required|string|max:255',   */         
         );
 
         $validator = Validator::make($request->all(), $rules);

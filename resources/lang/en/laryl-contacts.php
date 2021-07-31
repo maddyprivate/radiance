@@ -17,6 +17,7 @@ return [
 
 	'table' => [
 		'serial'	=> '#',
+		'type'		=> 'Type',
 		'name'		=> 'Name',
 		'pan'		=> 'PAN',
 		'mobile'	=> 'Mobile',
@@ -29,6 +30,7 @@ return [
 	'form' => [
 		'label' => [
 			'name'		=> 'Contact/Vendor Name',
+			'type'		=> 'Type',
 			'gstin'		=> 'GSTIN',
 			'country'	=> 'Country',
 			'state'		=> 'State',
