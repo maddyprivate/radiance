@@ -37,7 +37,7 @@
 					<td style="text-align: center; padding-bottom:0px;padding-top:15px;" colspan="4">{{$profile['address']}}</td>
 				</tr>
 				<tr class="invoice_for_row no_border ">
-					<td style="text-align: center;padding-bottom:10px;" colspan="4">Contact on: +91 99218 90622 Or Mail on: tukaramnagargoje@gmail.com</td>
+					<td style="text-align: center;padding-bottom:10px;" colspan="4">Contact on: 020 29995581 Or Mail on: info@radiancelpg.com</td>
 				</tr>
 	            <tr>
 	                <td rowspan="2" style="width:40%;">
