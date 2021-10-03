@@ -46,7 +46,7 @@
 									Invoice Date : {{$invoice->issueDate}} <br />
 									Reference No : <br />
 									Place Of Supply : {{$invoice->placeOfSupply}} <br />
-									Due Date : {{$invoice->dueDate}} <br />
+									<!-- Due Date : {{$invoice->dueDate}} <br /> -->
 									<br />
 									Transporter Name :<br />
 									GR/RW/AWB No. :<br />

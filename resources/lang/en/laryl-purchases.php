@@ -25,6 +25,7 @@ return [
 		'grandValue'		=> 'Grand Total',
 		'dealer'			=> 'Dealer',
 		'options'			=> 'Options',
+		'billNo'			=> 'Bill No.',
 	],
 
 	'form' => [
@@ -42,6 +43,7 @@ return [
 			'placeOfSupply'		=> 'Place of Supply',
 			'discountRate'		=> 'Discount (%)',
 			'purchaseStatus'		=> 'Purchase Status',
+			'billNo'		=> 'Bill No.',
 		]
 	],
 

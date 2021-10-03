@@ -63,12 +63,17 @@
 									</div>
 									<div class="col-sm-6 col-md-3">
 										<div class="row">
-											<label for="dueDate" class="col-md-12 col-form-label">@lang('laryl-purchases.form.label.dueDate')</label>
+											<label for="billNo" class="col-md-12 col-form-label">@lang('laryl-purchases.form.label.billNo')</label>
 					
 											<div class="col-md-12">
-												<div id="duedate" data-name="dueDate" class="bfh-datepicker" data-min="01-01-2000" data-format="y-m-d" data-date="today">
-												</div>
+												<input id="billNo" name="billNo" type="text" class="form-control" value={{ $purchase->billNo }} />
 											</div>
+		
+											@if ($errors->has('billNo'))
+												<span class="col-md-12 form-error-message">
+													<small for="billNo">{{ $errors->first('billNo') }}</small>
+												</span>
+											@endif
 										</div>
 									</div>
 									<div class="col-sm-6 col-md-3">

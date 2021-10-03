@@ -87,6 +87,16 @@ Route::get('/invoices/print/{id}/{copy}', [
     'uses'  => 'Backend\InvoicesController@printinvoice',
 ])->middleware('AuthUser');
 
+Route::get('/view-all-invoices', [
+    'as'    => 'ViewAllInvoices',
+    'uses'  => 'Backend\InvoicesController@viewAllInvoices',
+])->middleware('AuthUser');
+
+Route::get('/view-all-purchases', [
+    'as'    => 'ViewAllPurchases',
+    'uses'  => 'Backend\PurchasesController@ViewAllPurchases',
+])->middleware('AuthUser');
+
 Route::resource('invoices', 'Backend\InvoicesController', [
     'as'            => 'Invoices',
 ])->middleware('AuthUser');

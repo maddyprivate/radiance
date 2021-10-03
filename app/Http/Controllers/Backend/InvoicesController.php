@@ -36,6 +36,17 @@ class InvoicesController extends Controller
 
 		return view('backend.invoices.invoices_list', compact('invoices'));
 	}
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function viewAllInvoices()
+	{
+		$invoices = Invoice::get();
+
+		return view('backend.invoices.all_invoices_list', compact('invoices'));
+	}
 
 	/**
 	 * Show the form for creating a new resource.

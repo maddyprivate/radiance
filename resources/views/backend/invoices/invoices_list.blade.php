@@ -24,7 +24,7 @@
 									<tr>
 										<th> @lang('laryl-invoices.table.#') </th>
 										<th> @lang('laryl-invoices.table.issueDate') </th>
-										<th> @lang('laryl-invoices.table.dueDate') </th>
+										<!-- <th> @lang('laryl-invoices.table.dueDate') </th> -->
 										<th> @lang('laryl-invoices.table.customer') </th>
 										<th> @lang('laryl-invoices.table.invoiceStatus') </th>
 										<th> @lang('laryl-invoices.table.grandValue') </th>
@@ -43,7 +43,7 @@
 											<tr>
 												<th class="scope-row">{{$i}}</th>
 												<td class="t-cap">{{date('d/m/Y', strtotime($invoice['issueDate']))}}</td>
-												<td class="t-up">{{date('d/m/Y', strtotime($invoice['dueDate']))}}</td>
+												<!-- <td class="t-up">{{date('d/m/Y', strtotime($invoice['dueDate']))}}</td> -->
 												<td class="t-up">{{$invoice['customer']['name']}}</td>
 												<td class="t-up">{{$invoice['invoiceStatus']}}</td>
 												<td class="t-cap">Rs. {{$invoice['grandValue']}}</td>
@@ -79,13 +79,18 @@
 						{{-- table responsive --}}
 						</div> 
 
-						<div class="row">
-							<div class="col d-none d-sm-block">
-								{{ $invoices->render() }}
-							</div>
+						<div class="row mt-2">
+							<div class="col-md-10">
+								<div class="col d-none d-sm-block">
+									{{ $invoices->render() }}
+								</div>
 
-							<div class="col d-sm-none">
-								{{ $invoices->links('pagination::simple-bootstrap-4') }}
+								<div class="col d-sm-none">
+									{{ $invoices->links('pagination::simple-bootstrap-4') }}
+								</div>
+							</div>
+							<div class="col-md-2">
+								<a href="{{url('view-all-invoices')}}" class="btn btn-sm btn-primary"> View All</a>
 							</div>
 						</div>
 
@@ -128,6 +133,8 @@
 	$(document).ready(function() {
 		$('#invoiceTable').DataTable( {
 			dom: 'Bfrtip',
+			paging: false,
+			info: false,
 			buttons: [
 			'copyHtml5',
 			'excelHtml5',

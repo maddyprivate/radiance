@@ -61,17 +61,8 @@
 											</div>
 										</div>
 									</div>
-									<div class="col-sm-6 col-md-3">
-										<div class="row">
-											<label for="dueDate" class="col-md-12 col-form-label">@lang('laryl-invoices.form.label.dueDate')</label>
-					
-											<div class="col-md-12">
-												<div id="duedate" data-name="dueDate" class="bfh-datepicker" data-min="01-01-2000" data-format="y-m-d" data-date="today">
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-6 col-md-3">
+									
+									<div class="col-sm-6">
 										<div class="row">
 											<label for="placeOfSupply" class="col-md-12 col-form-label">@lang('laryl-invoices.form.label.placeOfSupply')</label>
 					

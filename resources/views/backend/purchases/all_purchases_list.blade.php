@@ -24,8 +24,8 @@
 									<tr>
 										<th> @lang('laryl-purchases.table.#') </th>
 										<th> @lang('laryl-purchases.table.issueDate') </th>
-										<th> @lang('laryl-purchases.table.dueDate') </th>
-										<th> @lang('laryl-purchases.table.dealer') </th>
+										<!-- <th> @lang('laryl-purchases.table.dueDate') </th> -->
+										<th> @lang('laryl-purchases.table.customer') </th>
 										<th> @lang('laryl-purchases.table.purchaseStatus') </th>
 										<th> @lang('laryl-purchases.table.grandValue') </th>
 										<th> @lang('laryl-purchases.table.options') </th>
@@ -34,7 +34,7 @@
 								<tbody>
 									@php
 										$purchase_array = $purchases->toArray();
-										$i = $purchase_array['from'];
+										$i = 1;
 									@endphp
 
 									@if(count($purchases) > 0)
@@ -43,8 +43,8 @@
 											<tr>
 												<th class="scope-row">{{$i}}</th>
 												<td class="t-cap">{{date('d/m/Y', strtotime($purchase['issueDate']))}}</td>
-												<td class="t-up">{{date('d/m/Y', strtotime($purchase['dueDate']))}}</td>
-												<td class="t-up">{{$purchase['dealer']['name']}}</td>
+												<!-- <td class="t-up">{{date('d/m/Y', strtotime($purchase['dueDate']))}}</td> -->
+												<td class="t-up">{{$purchase['customer']['name']}}</td>
 												<td class="t-up">{{$purchase['purchaseStatus']}}</td>
 												<td class="t-cap">Rs. {{$purchase['grandValue']}}</td>
 												<td>
@@ -80,15 +80,8 @@
 						</div> 
 
 						<div class="row mt-2">
-							<div class="col d-none d-sm-block">
-								{{ $purchases->render() }}
-							</div>
-
-							<div class="col d-sm-none">
-								{{ $purchases->links('pagination::simple-bootstrap-4') }}
-							</div>
 							<div class="col-md-2">
-								<a href="{{url('view-all-purchases')}}" class="btn btn-sm btn-primary"> View All</a>
+								<a href="{{url('purchases')}}" class="btn btn-sm btn-primary"> List Page wise</a>
 							</div>
 						</div>
 
@@ -101,7 +94,7 @@
 <div class="remodal" data-remodal-id="purchaseStatusChange" aria-labelledby="modalTitle" aria-describedby="modalDesc" data-remodal-options="hashTracking: false, closeOnOutsideClick: false">
 	<button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
 	<div>
-		<form id="purchaseStatusChange_form" method="post" action="{{url('changePurchaseStatus')}}">
+		<form id="purchaseStatusChange_form" method="post" action="{{url('changeInvoiceStatus')}}">
 			@csrf
 			<div class="form-group row align-items-center">
 				<label for="purchaseStatus" class="col-md-5 col-form-label">Change to @lang('laryl-purchases.form.label.purchaseStatus')</label>
@@ -130,9 +123,9 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#purchaseTable').DataTable( {
+			info: false,
 			dom: 'Bfrtip',
 			paging: false,
-			info: false,
 			buttons: [
 			'copyHtml5',
 			'excelHtml5',
@@ -140,28 +133,6 @@
 			'pdfHtml5'
 			]
 		} );
-		/*$('#transTable').DataTable({
-			initComplete: function () {
-				this.api().columns().every( function () {
-					var column = this;
-					var select = $('<select><option value=""></option></select>')
-					.appendTo( $(column.footer()).empty() )
-					.on( 'change', function () {
-						var val = $.fn.dataTable.util.escapeRegex(
-							$(this).val()
-							);
-						
-						column
-						.search( val ? '^'+val+'$' : '', true, false )
-						.draw();
-					} );
-					
-					column.data().unique().sort().each( function ( d, j ) {
-						select.append( '<option value="'+d+'">'+d+'</option>' )
-					} );
-				} );
-			}
-		});*/
 	} );
 </script>
 @endsection
