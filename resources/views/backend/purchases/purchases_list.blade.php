@@ -24,7 +24,7 @@
 									<tr>
 										<th> @lang('laryl-purchases.table.#') </th>
 										<th> @lang('laryl-purchases.table.issueDate') </th>
-										<th> @lang('laryl-purchases.table.dueDate') </th>
+										<th> @lang('laryl-purchases.table.billNo') </th>
 										<th> @lang('laryl-purchases.table.dealer') </th>
 										<th> @lang('laryl-purchases.table.purchaseStatus') </th>
 										<th> @lang('laryl-purchases.table.grandValue') </th>
@@ -43,7 +43,7 @@
 											<tr>
 												<th class="scope-row">{{$i}}</th>
 												<td class="t-cap">{{date('d/m/Y', strtotime($purchase['issueDate']))}}</td>
-												<td class="t-up">{{date('d/m/Y', strtotime($purchase['dueDate']))}}</td>
+												<td class="t-up">{{$purchase['billNo']}}</td>
 												<td class="t-up">{{$purchase['dealer']['name']}}</td>
 												<td class="t-up">{{$purchase['purchaseStatus']}}</td>
 												<td class="t-cap">Rs. {{$purchase['grandValue']}}</td>

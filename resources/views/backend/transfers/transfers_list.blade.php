@@ -42,7 +42,7 @@
 										@foreach($transfers as $key => $transfer)
 											<tr>
 												<th class="scope-row">{{$key+1}}</th>
-												<td class="t-cap">{{$transfer['date']}}</td>
+												<td class="t-cap">{{dmyDate($transfer['date'])}}</td>
 												<td class="t-cap">{{$transfer['fromaccounts']['accountName']}}</td>
 												<td class="t-cap">{{$transfer['toaccounts']['accountName']}}</td>
 												<td class="t-cap">Rs. {{$transfer['amount']}}</td>

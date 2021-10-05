@@ -34,7 +34,7 @@
 									@foreach($transactions as $key => $transaction)
 									<tr>
 										<th class="scope-row">{{$key+1}}</th>
-										<td class="t-cap">{{$transaction['date']}}</td>
+										<td class="t-cap">{{dmyDate($transaction['date'])}}</td>
 										<td class="t-up">{{$transaction['account']}}</td>
 										<td class="t-up">{{$transaction['type']}}</td>
 										<td class="t-up">Rs. {{$transaction['amount']}}</td>

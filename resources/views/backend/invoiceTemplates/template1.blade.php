@@ -54,7 +54,7 @@
 										<td colspan="2">{{$profile['address']}}</td>
 									</tr>
 									<tr>
-										<td>GSTIN<br />State<br />PAN<br /><br /></td>
+										<td>GSTIN:<br />State:<br />PAN:<br /><br /></td>
 										<td><span class="t-up">{{$profile['gstin']}}</span><br /><span class="t-cap">{{$profile['placeOfOrigin']}}</span> (Source State)<br /><span class="t-up">{{$profile['panNumber']}}</span><br /></td>
 									</tr>
 								</tbody>
@@ -72,7 +72,7 @@
 										<tr>
 											<td>Invoice Date</td>
 											<td>:</td>
-											<td>{{$issueDate}}</td>
+											<td>{{dmyDate($issueDate)}}</td>
 										</tr>
 										<tr>
 											<td>Place Of Supply</td>

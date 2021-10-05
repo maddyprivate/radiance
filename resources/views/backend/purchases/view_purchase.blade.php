@@ -43,7 +43,7 @@
 								</div>
 								<div class="col-md-4 my-3 my-md-0">
 									Purchase No : {{$purchase->serialPrefix.$purchase->serialNumber}} <br />
-									Purchase Date : {{$purchase->issueDate}} <br />
+									Purchase Date : {{date('d/m/Y',strtotime($purchase->issueDate))}} <br />
 									Reference No : <br />
 									Place Of Supply : {{$purchase->placeOfSupply}} <br />
 									Bill No. : {{$purchase->billNo}} <br />

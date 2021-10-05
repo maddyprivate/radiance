@@ -76,7 +76,7 @@
 										<tr>
 											<td>Purchase Date</td>
 											<td>:</td>
-											<td>{{$issueDate}}</td>
+											<td>{{dmyDate($issueDate)}}</td>
 										</tr>
 										<tr>
 											<td>Place Of Supply</td>
@@ -84,9 +84,9 @@
 											<td>{{$placeOfSupply}}</td>
 										</tr>
 										<tr>
-											<td>Due Date</td>
+											<td>Bill No.</td>
 											<td>:</td>
-											<td>{{$dueDate}}</td>
+											<td>{{$billNo}}</td>
 										</tr>
 									</tbody>
 								</table>

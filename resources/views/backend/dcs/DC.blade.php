@@ -76,7 +76,7 @@
 	                                <tr>
 	                                    <td>Delivery Date</td>
 	                                    <td>:</td>
-	                                    <td>{{$issueDate}}</td>
+	                                    <td>{{dmyDate($issueDate)}}</td>
 	                                </tr>
 	                                <tr>
 	                                    <td>Place Of Supply</td>

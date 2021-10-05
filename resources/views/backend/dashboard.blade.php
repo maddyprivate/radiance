@@ -9,12 +9,12 @@
                 <div class="col-lg-3">
                     <div class="widget style1 lazur-bg info-tile info-tile-alt tile-teal">
                         <div class="row">
-                            <div class="col-xs-4">
-                                <i class="fa fa-plus fa-5x"></i>
+                            <div class="col-xs-2">
+                                <i class="fa fa-plus fa-2x"></i>
                             </div>
-                            <div class="col-xs-8 text-right">
+                            <div class="col-xs-10 text-right">
                                 <span> Income Today </span>
-                                <h3 class="font-bold amount">Rs. 0.00</h3>
+                                <h3 class="font-bold amount">Rs. {{$todaysIncome}}</h3>
                                 <a href="{{url('deposits/create')}}" class="btn btn-success btn-xs">Add Deposit</a>
                             </div>
                         </div>
@@ -23,12 +23,12 @@
                 <div class="col-lg-3">
                     <div class="widget style1 red-bg info-tile info-tile-alt tile-danger">
                         <div class="row">
-                            <div class="col-xs-4">
-                                <i class="fa fa-minus fa-5x"></i>
+                            <div class="col-xs-2">
+                                <i class="fa fa-minus fa-2x"></i>
                             </div>
-                            <div class="col-xs-8 text-right">
+                            <div class="col-xs-10 text-right">
                                 <span> Expense Today </span>
-                                <h3 class="font-bold amount">Rs. 0.00</h3>
+                                <h3 class="font-bold amount">Rs.{{$todaysExpense}}</h3>
                                 <a href="{{url('expenses/create')}}" class="btn btn-warning btn-xs">Add Expense</a>
                             </div>
                         </div>
@@ -37,12 +37,12 @@
                 <div class="col-lg-3">
                     <div class="widget style1 lazur-bg info-tile info-tile-alt tile-teal">
                         <div class="row">
-                            <div class="col-xs-4">
-                                <i class="fa fa-plus fa-5x"></i>
+                            <div class="col-xs-2">
+                                <i class="fa fa-plus fa-2x"></i>
                             </div>
-                            <div class="col-xs-8 text-right">
+                            <div class="col-xs-10 text-right">
                                 <span> Income This Month </span>
-                                <h3 class="font-bold amount">Rs. 0.00</h3>
+                                <h3 class="font-bold amount">Rs.{{$monthlyIncome}}</h3>
                                 <a href="{{url('deposits/create')}}" class="btn btn-success btn-xs">Add Deposit</a>
                             </div>
                         </div>
@@ -51,12 +51,12 @@
                 <div class="col-lg-3">
                     <div class="widget style1 red-bg info-tile info-tile-alt tile-danger">
                         <div class="row">
-                            <div class="col-xs-4">
-                                <i class="fa fa-minus fa-5x"></i>
+                            <div class="col-xs-2">
+                                <i class="fa fa-minus fa-2x"></i>
                             </div>
-                            <div class="col-xs-8 text-right">
+                            <div class="col-xs-10 text-right">
                                 <span> Expense This Month </span>
-                                <h3 class="font-bold amount">Rs. 0.00</h3>
+                                <h3 class="font-bold amount">Rs.{{$monthlyExpense}}</h3>
                                 <a href="{{url('expenses/create')}}" class="btn btn-warning btn-xs">Add Expense</a>
                             </div>
                         </div>
@@ -103,7 +103,7 @@
                                     <tr>
                                         <th> @lang('laryl-invoices.table.#') </th>
                                         <th> @lang('laryl-invoices.table.issueDate') </th>
-                                        <th> @lang('laryl-invoices.table.dueDate') </th>
+                                        <!-- <th> @lang('laryl-invoices.table.dueDate') </th> -->
                                         <th> @lang('laryl-invoices.table.invoiceStatus') </th>
                                         <th> @lang('laryl-invoices.table.grandValue') </th>
                                         <th> @lang('laryl-invoices.table.options') </th>
@@ -120,8 +120,8 @@
                                     @foreach($invoices as $invoice)
                                     <tr>
                                         <th class="scope-row">{{$i}}</th>
-                                        <td class="t-cap">{{$invoice['issueDate']}}</td>
-                                        <td class="t-up">{{$invoice['dueDate']}}</td>
+                                        <td class="t-cap">{{date('d/m/Y',strtotime($invoice['issueDate']))}}</td>
+                                        <!-- <td class="t-up">{{$invoice['dueDate']}}</td> -->
                                         <td class="t-up">{{$invoice['invoiceStatus']}}</td>
                                         <td class="t-cap">Rs. {{$invoice['grandValue']}}</td>
                                         <td>

@@ -23,4 +23,12 @@ class Invoice extends Model
     {
         return $this->hasMany('App\InvoiceProduct');
     }
+
+    /**
+     * Get the products for the invoice.
+     */
+    public function payment()
+    {
+        return $this->hasMany('App\InvoicePayment');
+    }
 }

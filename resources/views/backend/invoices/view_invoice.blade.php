@@ -43,7 +43,7 @@
 								</div>
 								<div class="col-md-4 my-3 my-md-0">
 									Invoice No : {{$invoice->serialPrefix.$invoice->serialNumber}} <br />
-									Invoice Date : {{$invoice->issueDate}} <br />
+									Invoice Date : {{dmyDate($invoice->issueDate)}} <br />
 									Reference No : <br />
 									Place Of Supply : {{$invoice->placeOfSupply}} <br />
 									<!-- Due Date : {{$invoice->dueDate}} <br /> -->

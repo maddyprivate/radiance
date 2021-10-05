@@ -18,8 +18,8 @@ return [
 	],
 
 	'table' => [
-		'#'					=> '#',
-		'issueDate'			=> 'Pur. Date',
+		'#'					=> 'Sr.No.',
+		'issueDate'			=> 'Purchase Date',
 		'dueDate'			=> 'Due Date',
 		'purchaseStatus'		=> 'Purchase Status',
 		'grandValue'		=> 'Grand Total',

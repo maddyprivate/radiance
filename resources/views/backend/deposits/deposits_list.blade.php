@@ -43,7 +43,7 @@
 										@foreach($deposits as $key => $deposit)
 											<tr>
 												<th class="scope-row">{{$key+1}}</th>
-												<td class="t-cap">{{$deposit['date']}}</td>
+												<td class="t-cap">{{dmyDate($deposit['date'])}}</td>
 												<td class="t-up">{{$deposit['amount']}}</td>
 												<td class="t-up">{{$deposit['accounts']['accountName']}}</td>
 												<td class="t-cap">Rs. {{$deposit['description']}}</td>
