@@ -25,6 +25,8 @@ return [
 		'grandValue'		=> 'Grand Total',
 		'customer'			=> 'Customer',
 		'options'			=> 'Options',
+		'pendingBalance'	=> 'Pending Balance',
+		'invoiceNo'			=> 'Invoice No.',
 	],
 
 	'form' => [

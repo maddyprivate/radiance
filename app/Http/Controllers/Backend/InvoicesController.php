@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Account;
 use App\Invoice;
+use App\InvoicePayment;
 use App\InvoiceCustomer;
 use App\InvoiceProduct;
 use App\InvoiceSetting;
 use App\ProfileSetting;
 use App\Contact;
 use App\Product;
+use App\Transaction;
 
 use Validator;
 use Response;
@@ -32,9 +35,9 @@ class InvoicesController extends Controller
 	 */
 	public function index()
 	{
-		$invoices = Invoice::paginate(10);
-
-		return view('backend.invoices.invoices_list', compact('invoices'));
+		$invoices = Invoice::orderBy('id','desc')->paginate(10);
+		$accounts = Account::get();
+		return view('backend.invoices.invoices_list', compact('invoices','accounts'));
 	}
 	/**
 	 * Display a listing of the resource.
@@ -129,6 +132,8 @@ class InvoicesController extends Controller
 
 		} else {
 			$invoiceData = $request->except('customer', 'invoiceProducts', '_token','customerId');
+			$invoiceData['pendingBalance'] = $invoiceData['grandValue'];
+			// dd($invoiceData);
 			$invoiceCustomerData = $request->input('customer');
 			$invoiceProductsData = $request->input('invoiceProducts');
 
@@ -451,4 +456,49 @@ class InvoicesController extends Controller
 		return Redirect::to('invoices');
 	}
 
+	public function payInvoiceBalance(Request $request)
+	{
+		$invoice = Invoice::find($request->id);
+		$invoicePaymentData['invoice_id'] =  $request->id;
+		$invoicePaymentData['paymentDate'] =  $request->paymentDate;
+		$invoicePaymentData['amount'] =  $request->invoicePayment;
+		$invoicePaymentData['balance'] =  $invoice->pendingBalance - $request->invoicePayment;
+		$invoicePaymentData['user_id'] =  auth()->user()->id;
+		$invoicePaymentData['account_id'] =  $request->account_id;
+		$invoicePaymentData['description'] =  $request->description;
+		$invoicePaymentData['method'] =  $request->method;
+		$invoicepayment = InvoicePayment::create($invoicePaymentData);
+		
+		if($invoicePaymentData['balance']==0)
+			$invoice->invoiceStatus = 'paid';
+		else
+			$invoice->invoiceStatus = 'partial';
+		$invoice->amountRecieved = $invoice->amountRecieved+$request->invoicePayment;
+		$invoice->pendingBalance = $invoicePaymentData['balance'];
+		$invoice->save();
+
+		$accounts = Account::find($request->account_id);
+		$accounts->balance = $accounts->balance+$request->invoicePayment;
+		$accounts->save();
+
+		$transaction['payerid'] = $invoice->customer->customerId;
+		$transaction['payeeid'] = $request->account_id;
+		$transaction['account'] = $accounts->accountName;
+		$transaction['type'] 	= 'Payment';
+		$transaction['amount'] = $request->invoicePayment;
+		$transaction['description'] = $request->description;
+		$transaction['date'] = $request->paymentDate;
+		$transaction['cr'] = $request->invoicePayment;
+		$transaction['bal'] = $accounts->balance;
+		$transfer = Transaction::create($transaction);
+		
+		$contact = Contact::find($invoice->customer->customerId);
+		$balance = $contact->outstandingBalance - $request->invoicePayment;
+
+		$contact->outstandingBalance = $balance;
+		$contact->save();
+
+		toast('Payment has been done successfully!','success','top-right')->autoclose(3500);
+		return Redirect::to('invoices');
+	}
 }

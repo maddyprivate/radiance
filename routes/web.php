@@ -92,6 +92,11 @@ Route::get('/view-all-invoices', [
     'uses'  => 'Backend\InvoicesController@viewAllInvoices',
 ])->middleware('AuthUser');
 
+Route::any('/payInvoiceBalance', [
+    'as'    => 'payInvoiceBalance',
+    'uses'  => 'Backend\InvoicesController@payInvoiceBalance',
+])->middleware('AuthUser');
+
 Route::get('/view-all-purchases', [
     'as'    => 'ViewAllPurchases',
     'uses'  => 'Backend\PurchasesController@ViewAllPurchases',
