@@ -106,6 +106,43 @@ Route::resource('invoices', 'Backend\InvoicesController', [
     'as'            => 'Invoices',
 ])->middleware('AuthUser');
 
+Route::resource('debitNotes', 'Backend\DebitNotesController', [
+    'as'            => 'DebitNotes',
+])->middleware('AuthUser');
+
+Route::get('/debitNotes/select_dealer/{dealerName}', 'Backend\DebitNotesController@selectDealer', [
+    'as'            => 'SelectDealer',
+])->middleware('AuthUser');
+
+
+Route::get('/debitNotes/select_product/{description}', 'Backend\DebitNotesController@selectProduct', [
+    'as'            => 'SelectProduct',
+])->middleware('AuthUser');
+
+Route::get('/debitNotes/print/{id}/{copy}', [
+    'as'    => 'PrintDebitNote',
+    'uses'  => 'Backend\DebitNotesController@printDebitNote',
+])->middleware('AuthUser');
+
+
+Route::resource('creditNotes', 'Backend\CreditNotesController', [
+    'as'            => 'CreditNotes',
+])->middleware('AuthUser');
+
+Route::get('/creditNotes/select_customer/{customerName}', 'Backend\CreditNotesController@selectCustomer', [
+    'as'            => 'SelectCustomer',
+])->middleware('AuthUser');
+
+
+Route::get('/creditNotes/select_product/{description}', 'Backend\CreditNotesController@selectProduct', [
+    'as'            => 'SelectProduct',
+])->middleware('AuthUser');
+
+Route::get('/creditNotes/print/{id}/{copy}', [
+    'as'    => 'PrintCreditNote',
+    'uses'  => 'Backend\CreditNotesController@printCreditNote',
+])->middleware('AuthUser');
+
 Route::get('/purchases/select_dealer/{dealerName}', 'Backend\PurchasesController@selectDealer', [
     'as'            => 'SelectDealer',
 ])->middleware('AuthUser');

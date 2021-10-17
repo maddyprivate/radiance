@@ -167,6 +167,32 @@
 								</li>
 							</ul>
 						</li>
+						<li class="{{ isActiveRoute('DebitNotes.*') }}">
+							<a href="#debitenotedown" aria-expanded="false" data-toggle="collapse">
+								<i class="fas fa-file-invoice-dollar"></i>Debit Notes
+							</a>
+							<ul id="debitenotedown" class="collapse list-unstyled ">
+								<li>
+									<a href="{{ route('DebitNotes.debitNotes.create') }}">Create Debit Note</a>
+								</li>
+								<li>
+									<a href="{{ route('DebitNotes.debitNotes.index') }}">List Debit Note</a>
+								</li>
+							</ul>
+						</li>
+						<li class="{{ isActiveRoute('CreditNotes.*') }}">
+							<a href="#creditenotedown" aria-expanded="false" data-toggle="collapse">
+								<i class="fas fa-file-invoice-dollar"></i>Credit Notes
+							</a>
+							<ul id="creditenotedown" class="collapse list-unstyled ">
+								<li>
+									<a href="{{ route('CreditNotes.creditNotes.create') }}">Create Credit Note</a>
+								</li>
+								<li>
+									<a href="{{ route('CreditNotes.creditNotes.index') }}">List Credit Note</a>
+								</li>
+							</ul>
+						</li>
 						<!-- <li class="{{ isActiveRoute('Dcs.*') }}">
 							<a href="#dcdown" aria-expanded="false" data-toggle="collapse">
 								<i class="fas fa-file-invoice-dollar"></i>Dcs
