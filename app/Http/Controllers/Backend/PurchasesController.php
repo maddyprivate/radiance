@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Transaction;
 use App\Purchase;
+use App\Account;
+use App\PurchasePayment;
 use App\PurchaseDealer;
 use App\PurchaseProduct;
 use App\PurchaseSetting;
@@ -33,8 +36,8 @@ class PurchasesController extends Controller
 	public function index()
 	{
 		$purchases = Purchase::paginate(10);
-
-		return view('backend.purchases.purchases_list', compact('purchases'));
+		$accounts = Account::get();
+		return view('backend.purchases.purchases_list', compact('purchases','accounts'));
 	}
 
 	/**
@@ -450,5 +453,50 @@ class PurchasesController extends Controller
 		toast('Status changed Successfully!','success','top-right')->autoclose(3500);
 		return Redirect::to('purchases');
 	}
+	public function payPurchaseBalance(Request $request)
+	{
+		$purchase = Purchase::find($request->id);
+		// dd($request->all());
+		$purchasePaymentData['purchase_id'] =  $request->id;
+		$purchasePaymentData['paymentDate'] =  $request->paymentDate;
+		$purchasePaymentData['amount'] =  $request->purchasePayment;
+		$purchasePaymentData['balance'] =  $purchase->pendingBalance - $request->purchasePayment;
+		$purchasePaymentData['user_id'] =  auth()->user()->id;
+		$purchasePaymentData['account_id'] =  $request->account_id;
+		$purchasePaymentData['description'] =  $request->description;
+		$purchasePaymentData['method'] =  $request->method;
+		$purchasepayment = PurchasePayment::create($purchasePaymentData);
+		
+		if($purchasePaymentData['balance']==0)
+			$purchase->purchaseStatus = 'paid';
+		else
+			$purchase->purchaseStatus = 'partial';
+		$purchase->amountRecieved = $purchase->amountRecieved+$request->purchasePayment;
+		$purchase->pendingBalance = $purchasePaymentData['balance'];
+		$purchase->save();
 
+		$accounts = Account::find($request->account_id);
+		$accounts->balance = $accounts->balance-$request->purchasePayment;
+		$accounts->save();
+
+		$transaction['payerid'] = $purchase->dealer->dealerId;
+		$transaction['payeeid'] = $request->account_id;
+		$transaction['account'] = $accounts->accountName;
+		$transaction['type'] 	= 'Purchase';
+		$transaction['amount'] = $request->purchasePayment;
+		$transaction['description'] = $request->description;
+		$transaction['date'] = $request->paymentDate;
+		$transaction['dr'] = $request->purchasePayment;
+		$transaction['bal'] = $accounts->balance;
+		$transfer = Transaction::create($transaction);
+		
+		$contact = Contact::find($purchase->dealer->dealerId);
+		$balance = $contact->outstandingBalance - $request->purchasePayment;
+
+		$contact->outstandingBalance = $balance;
+		$contact->save();
+
+		toast('Payment has been done successfully!','success','top-right')->autoclose(3500);
+		return Redirect::to('purchases');
+	}
 }

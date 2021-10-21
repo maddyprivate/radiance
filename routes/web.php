@@ -160,6 +160,11 @@ Route::resource('purchases', 'Backend\PurchasesController', [
     'as'            => 'Purchases',
 ])->middleware('AuthUser');
 
+Route::any('/payPurchaseBalance', [
+    'as'    => 'payPurchaseBalance',
+    'uses'  => 'Backend\PurchasesController@payPurchaseBalance',
+])->middleware('AuthUser');
+
 Route::get('/dcs/select_customer/{customerName}', 'Backend\DcsController@selectCustomer', [
     'as'            => 'SelectCustomer',
 ])->middleware('AuthUser');
