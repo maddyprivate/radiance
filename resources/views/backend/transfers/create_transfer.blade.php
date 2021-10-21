@@ -64,17 +64,18 @@
 											</div>
 											<div class="col-sm-4">
 												<div class="row">
-													<label for="toAccountId" class="col-md-12 col-form-label">@lang('laryl-transfers.form.label.toAccountId')</label>
+													<label for="toAccount" class="col-md-12 col-form-label">@lang('laryl-transfers.form.label.toAccountId')</label>
 							
 													<div class="col-md-12">
-														<select id="toAccountId" name="toAccountId" class="form-control ">
+														<input type="text" id="toAccount" name="toAccount" class="form-control "/>
+														<!-- <select id="toAccountId" name="toAccountId" class="form-control ">
 															<option value="">Select Account</option>
 															@foreach($accounts as $key=>$value)
 																<option value="{{$value->id}}">
 																	{{$value->accountName}}
 																</option>
 															@endforeach
-														</select>
+														</select> -->
 													</div>
 				
 													@if ($errors->has('toAccountId'))

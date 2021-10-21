@@ -266,7 +266,7 @@
 						<div class="container-fluid">
 							<div class="row">
 								<div class="col-sm-6">
-									<p>Radiance Gas Buliding Material Suppliers. © 
+									<p>Radiance Gas. © 
 										<a class="designer" href="http://RadianceLPG.com" target=_blank>
 											<!-- <span class="icon-designer">
 												<span class="path2"></span>

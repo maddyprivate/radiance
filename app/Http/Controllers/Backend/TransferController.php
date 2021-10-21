@@ -51,7 +51,7 @@ class TransferController extends Controller
         $rules = array(
             'date'              => 'required',
             'fromAccountId'     => 'required',
-            'toAccountId'       => 'required',
+            'toAccount'       => 'required',
             'amount'            => 'required',
             'description'       => 'required',
             'method'          => 'required',
@@ -79,12 +79,13 @@ class TransferController extends Controller
             $fromaccount->balance = $fromaccount->balance-$request->amount;
             $fromaccount->save();
 
-            $toaccount = Account::find($request->toAccountId);
-            $toaccount->balance = $toaccount->balance+$request->amount;
-            $toaccount->save();
+            // $toaccount = Account::find($request->toAccountId);
+            // $toaccount->balance = $toaccount->balance+$request->amount;
+            // $toaccount->save();
 
             $transactionData['payerid'] = $request->fromAccountId;
-            $transactionData['payeeid'] = $request->toAccountId;
+            // $transactionData['payeeid'] = $request->toAccountId;
+            $transactionData['toAccount'] = $request->toAccount;
             $transactionData['type'] = 'Transfer';
             $transactionData['amount'] = $request->amount;
             $transactionData['description'] = $request->description;
@@ -96,10 +97,10 @@ class TransferController extends Controller
             $transactionData['bal'] = $fromaccount->balance;
             $transfer1 = Transaction::create($transactionData);
             
-            $transactionData['account'] = $transfer->toaccounts->accountName;
+            $transactionData['account'] = $transfer->toAccount;
             $transactionData['cr'] = $request->amount;
             $transactionData['dr'] = 0;
-            $transactionData['bal'] = $toaccount->balance; 
+            $transactionData['bal'] = $request->amount; 
 
             $transfer2 = Transaction::create($transactionData);
 
