@@ -48,8 +48,8 @@ class PurchasesController extends Controller
 	public function viewAllPurchases()
 	{
 		$purchases = Purchase::get();
-
-		return view('backend.purchases.all_purchases_list', compact('purchases'));
+		$accounts = Account::get();
+		return view('backend.purchases.all_purchases_list', compact('purchases','accounts'));
 	}
 	/**
 	 * Show the form for creating a new resource.

@@ -71,7 +71,7 @@
 									<table class="table-responsive">
 										<thead>
 											<tr class="pricing_thr">
-												<th>S. No.</th>
+												<th>Sr. No.</th>
 												<th>Description</th>
 												<th>HSN/SAC</th>
 												<th>Qty. Unit</th>
@@ -94,7 +94,7 @@
 										<tbody>
 											@foreach($creditNote->product as $prod)
 												<tr class="product_row">
-													<td>{{$prod['invoiceSerial']}}</td>
+													<td>{{$prod['creditNoteSerial']}}</td>
 													<td>{{$prod['description']}}</td>
 													<td>{{$prod['hsn']}}</td>
 													<td>{{$prod['quantity']}} {{$prod['unit']}}</td>

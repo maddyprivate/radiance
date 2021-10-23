@@ -114,6 +114,10 @@ Route::get('/debitNotes/select_dealer/{dealerName}', 'Backend\DebitNotesControll
     'as'            => 'SelectDealer',
 ])->middleware('AuthUser');
 
+Route::get('/view-all-debitNotes', [
+    'as'    => 'ViewAllDebitNotes',
+    'uses'  => 'Backend\DebitNotesController@ViewAllDebitNotes',
+])->middleware('AuthUser');
 
 Route::get('/debitNotes/select_product/{description}', 'Backend\DebitNotesController@selectProduct', [
     'as'            => 'SelectProduct',
@@ -143,6 +147,11 @@ Route::get('/creditNotes/print/{id}/{copy}', [
     'uses'  => 'Backend\CreditNotesController@printCreditNote',
 ])->middleware('AuthUser');
 
+Route::get('/view-all-creditNotes', [
+    'as'    => 'ViewAllcreditNotes',
+    'uses'  => 'Backend\CreditNotesController@ViewAllcreditNotes',
+])->middleware('AuthUser');
+
 Route::get('/purchases/select_dealer/{dealerName}', 'Backend\PurchasesController@selectDealer', [
     'as'            => 'SelectDealer',
 ])->middleware('AuthUser');
@@ -163,6 +172,16 @@ Route::resource('purchases', 'Backend\PurchasesController', [
 Route::any('/payPurchaseBalance', [
     'as'    => 'payPurchaseBalance',
     'uses'  => 'Backend\PurchasesController@payPurchaseBalance',
+])->middleware('AuthUser');
+
+Route::any('/payCreditNoteBalance', [
+    'as'    => 'payCreditNoteBalance',
+    'uses'  => 'Backend\CreditNotesController@payCreditNoteBalance',
+])->middleware('AuthUser');
+
+Route::any('/payDebitNoteBalance', [
+    'as'    => 'payDebitNoteBalance',
+    'uses'  => 'Backend\DebitNotesController@payDebitNoteBalance',
 ])->middleware('AuthUser');
 
 Route::get('/dcs/select_customer/{customerName}', 'Backend\DcsController@selectCustomer', [

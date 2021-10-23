@@ -33,10 +33,10 @@ class DashboardController extends Controller
 
         $request->user()->authorizeRoles(['user', 'admin']);
         $currentDate = date('Y-m-d');
-        $todaysIncome = Transaction::where('date',$currentDate)->whereIn('type',['Income','Deposit'])->sum('amount');
-        $todaysExpense = Transaction::where('date',$currentDate)->whereIn('type',['Expense'])->sum('amount');
-        $monthlyIncome = Transaction::whereMonth('date', date('m'))->whereIn('type',['Income','Deposit'])->sum('amount');
-        $monthlyExpense = Transaction::whereMonth('date', date('m'))->whereIn('type',['Expense'])->sum('amount');
+        $todaysIncome = Transaction::where('date',$currentDate)->whereIn('type',['Invoice','Deposit'])->sum('amount');
+        $todaysExpense = Transaction::where('date',$currentDate)->whereIn('type',['Expense','Purchase'])->sum('amount');
+        $monthlyIncome = Transaction::whereMonth('date', date('m'))->whereIn('type',['Invoice','Deposit'])->sum('amount');
+        $monthlyExpense = Transaction::whereMonth('date', date('m'))->whereIn('type',['Expense','Purchase'])->sum('amount');
         // dd($todaysIncome);
         // $todaysTotal = InvoicePayment::where('issueDate',$currentDate)->sum('amount');
         $invoices = Invoice::paginate(10);

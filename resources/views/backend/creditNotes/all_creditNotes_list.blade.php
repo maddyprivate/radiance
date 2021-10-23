@@ -9,54 +9,54 @@
 				<div class="card">
 					<div class="card-header d-flex align-items-center">
 						<div class="col-6">
-							<h3 class="h4">@lang('laryl-invoices.heading.list')</h3>
+							<h3 class="h4">@lang('laryl-creditNotes.heading.list')</h3>
 						</div>
 						<div class="col-6 text-right">
-							<a href="{{ route('Invoices.invoices.create')  }}" class="bttn-plain">
-								<i class="fas fa-file-invoice"></i>&emsp;@lang('laryl-invoices.buttons.create-new')
+							<a href="{{ route('CreditNotes.creditNotes.create')  }}" class="bttn-plain">
+								<i class="fas fa-file-creditNote"></i>&emsp;@lang('laryl-creditNotes.buttons.create-new')
 							</a>
 						</div>
 					</div>
 					<div class="card-body">
 						<div class="table-responsive">
-							<table class="table" id="invoiceTable">
+							<table class="table" id="creditNoteTable">
 								<thead>
 									<tr>
-										<th> @lang('laryl-invoices.table.#') </th>
-										<th> @lang('laryl-invoices.table.issueDate') </th>
-										<!-- <th> @lang('laryl-invoices.table.dueDate') </th> -->
-										<th> @lang('laryl-invoices.table.customer') </th>
-										<th> @lang('laryl-invoices.table.invoiceStatus') </th>
-										<th> @lang('laryl-invoices.table.grandValue') </th>
-										<th> @lang('laryl-invoices.table.options') </th>
+										<th> @lang('laryl-creditNotes.table.#') </th>
+										<th> @lang('laryl-creditNotes.table.issueDate') </th>
+										<!-- <th> @lang('laryl-creditNotes.table.dueDate') </th> -->
+										<th> @lang('laryl-creditNotes.table.customer') </th>
+										<th> @lang('laryl-creditNotes.table.creditNoteStatus') </th>
+										<th> @lang('laryl-creditNotes.table.grandValue') </th>
+										<th> @lang('laryl-creditNotes.table.options') </th>
 									</tr>
 								</thead>
 								<tbody>
 									@php
-										$invoice_array = $invoices->toArray();
+										$creditNote_array = $creditNotes->toArray();
 										$i = 1;
 									@endphp
 
-									@if(count($invoices) > 0)
+									@if(count($creditNotes) > 0)
 
-										@foreach($invoices as $invoice)
+										@foreach($creditNotes as $creditNote)
 											<tr>
 												<th class="scope-row">{{$i}}</th>
-												<td class="t-cap">{{date('d/m/Y', strtotime($invoice['issueDate']))}}</td>
-												<!-- <td class="t-up">{{date('d/m/Y', strtotime($invoice['dueDate']))}}</td> -->
-												<td class="t-up">{{$invoice['customer']['name']}}</td>
-												<td class="t-up">{{$invoice['invoiceStatus']}}</td>
-												<td class="t-cap">Rs. {{$invoice['grandValue']}}</td>
+												<td class="t-cap">{{date('d/m/Y', strtotime($creditNote['issueDate']))}}</td>
+												<!-- <td class="t-up">{{date('d/m/Y', strtotime($creditNote['dueDate']))}}</td> -->
+												<td class="t-up">{{$creditNote['customer']['name']}}</td>
+												<td class="t-up">{{$creditNote['creditNoteStatus']}}</td>
+												<td class="t-cap">Rs. {{$creditNote['grandValue']}}</td>
 												<td>
 
-														<a class="btn btn-sm btn-success mb-2 mb-sm-0" href="{{ route('Invoices.invoices.show', $invoice['id'])  }}" data-toggle="tooltip" title="@lang('laryl.tooltips.show')">
+														<a class="btn btn-sm btn-success mb-2 mb-sm-0" href="{{ route('CreditNotes.creditNotes.show', $creditNote['id'])  }}" data-toggle="tooltip" title="@lang('laryl.tooltips.show')">
 															@lang('laryl.buttons.show')
 														</a>
 
-														<a class="btn btn-sm btn-warning mb-2 mb-sm-0" href="{{ route('Invoices.invoices.edit', $invoice['id'])  }}" data-toggle="tooltip" title="@lang('laryl.tooltips.edit')">
+														<a class="btn btn-sm btn-warning mb-2 mb-sm-0" href="{{ route('CreditNotes.creditNotes.edit', $creditNote['id'])  }}" data-toggle="tooltip" title="@lang('laryl.tooltips.edit')">
 															@lang('laryl.buttons.edit')
 														</a>
-														<a class="btn btn-sm btn-primary mb-2 mb-sm-0" data-remodal-target="invoiceStatusChange" href="javascript:;"  title="@lang('laryl.tooltips.payment')" onclick="$('#invoiceStatusChange').val('{{$invoice['invoiceStatus']}}');$('#id').val('{{$invoice['id']}}');">
+														<a class="btn btn-sm btn-primary mb-2 mb-sm-0" data-remodal-target="creditNoteStatusChange" href="javascript:;"  title="@lang('laryl.tooltips.payment')" onclick="$('#creditNoteStatusChange').val('{{$creditNote['creditNoteStatus']}}');$('#id').val('{{$creditNote['id']}}');">
 															@lang('laryl.buttons.payment')
 														</a>
 												</td>
@@ -81,7 +81,7 @@
 
 						<div class="row mt-2">
 							<div class="col-md-2">
-								<a href="{{url('invoices')}}" class="btn btn-sm btn-primary"> List Page wise</a>
+								<a href="{{url('creditNotes')}}" class="btn btn-sm btn-primary"> List Page wise</a>
 							</div>
 						</div>
 
@@ -91,16 +91,16 @@
 		</div>
 	</div>
 </section>
-<div class="remodal" data-remodal-id="invoiceStatusChange" aria-labelledby="modalTitle" aria-describedby="modalDesc" data-remodal-options="hashTracking: false, closeOnOutsideClick: false">
+<div class="remodal" data-remodal-id="creditNoteStatusChange" aria-labelledby="modalTitle" aria-describedby="modalDesc" data-remodal-options="hashTracking: false, closeOnOutsideClick: false">
 	<button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
 	<div>
-		<form id="invoiceStatusChange_form" method="post" action="{{url('changeInvoiceStatus')}}">
+		<form id="creditNoteStatusChange_form" method="post" action="{{url('changeCreditNoteStatus')}}">
 			@csrf
 			<div class="form-group row align-items-center">
-				<label for="invoiceStatus" class="col-md-5 col-form-label">Change to @lang('laryl-invoices.form.label.invoiceStatus')</label>
+				<label for="creditNoteStatus" class="col-md-5 col-form-label">Change to @lang('laryl-creditNotes.form.label.creditNoteStatus')</label>
 				<div class="col-sm-7">
 					<div class="col-md-12">
-						<select id="invoiceStatus" name="invoiceStatus" class="form-control">
+						<select id="creditNoteStatus" name="creditNoteStatus" class="form-control">
 							<option value="unpaid">Unpaid</option>
 							<option value="partial">Partial</option>
 							<option value="paid">Paid</option>
@@ -122,7 +122,7 @@
 @section('footer')
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('#invoiceTable').DataTable( {
+		$('#creditNoteTable').DataTable( {
 			info: false,
 			dom: 'Bfrtip',
 			paging: false,

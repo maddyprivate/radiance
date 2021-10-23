@@ -58,9 +58,9 @@
 														<a class="btn btn-sm btn-warning mb-2 mb-sm-0" href="{{ route('CreditNotes.creditNotes.edit', $creditNote['id'])  }}" data-toggle="tooltip" title="@lang('laryl.tooltips.edit')">
 															@lang('laryl.buttons.edit')
 														</a>
-														<a class="btn btn-sm btn-primary mb-2 mb-sm-0 cls_creditNotePayment_btn" data-remodal-target="creditNotePayment" href="javascript:;" data-pendingBalance="{{$creditNote['pendingBalance']}}" data-creditNoteNumber="{{$creditNote['serialPrefix']}}{{$creditNote['serialNumber']}}" data-id="{{$creditNote['id']}}" title="@lang('laryl.tooltips.payment')" >
+														<!-- <a class="btn btn-sm btn-primary mb-2 mb-sm-0 cls_creditNotePayment_btn" data-remodal-target="creditNotePayment" href="javascript:;" data-pendingBalance="{{$creditNote['pendingBalance']}}" data-creditNoteNumber="{{$creditNote['serialPrefix']}}{{$creditNote['serialNumber']}}" data-id="{{$creditNote['id']}}" title="@lang('laryl.tooltips.payment')" >
 															@lang('laryl.buttons.payment')
-														</a>
+														</a> -->
 												</td>
 											</tr>
 

@@ -47,8 +47,8 @@ class InvoicesController extends Controller
 	public function viewAllInvoices()
 	{
 		$invoices = Invoice::get();
-
-		return view('backend.invoices.all_invoices_list', compact('invoices'));
+		$accounts = Account::get();
+		return view('backend.invoices.all_invoices_list', compact('invoices','accounts'));
 	}
 
 	/**
@@ -484,7 +484,7 @@ class InvoicesController extends Controller
 		$transaction['payerid'] = $invoice->customer->customerId;
 		$transaction['payeeid'] = $request->account_id;
 		$transaction['account'] = $accounts->accountName;
-		$transaction['type'] 	= 'Payment';
+		$transaction['type'] 	= 'Invoice';
 		$transaction['amount'] = $request->invoicePayment;
 		$transaction['description'] = $request->description;
 		$transaction['date'] = $request->paymentDate;
