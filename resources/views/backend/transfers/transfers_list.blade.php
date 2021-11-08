@@ -30,6 +30,7 @@
 										<th> @lang('laryl-transfers.table.description') </th>
 										<th> @lang('laryl-transfers.table.method') </th>
 										<th> @lang('laryl-transfers.table.ref') </th>
+										<th> @lang('laryl-transfers.table.options') </th>
 									</tr>
 								</thead>
 								<tbody>
@@ -50,17 +51,13 @@
 												<td class="t-cap">{{$transfer['description']}}</td>
 												<td class="t-cap">{{$transfer['method']}}</td>
 												<td class="t-cap">{{$transfer['ref']}}</td>
-												<!-- <td>
-
-														<a class="btn btn-sm btn-success mb-2 mb-sm-0" href="{{ route('Transfers.transfers.show', $transfer['id'])  }}" data-toggle="tooltip" title="@lang('laryl.tooltips.show')">
-															@lang('laryl.buttons.show')
-														</a>
+												<td>
 
 														<a class="btn btn-sm btn-warning mb-2 mb-sm-0" href="{{ route('Transfers.transfers.edit', $transfer['id'])  }}" data-toggle="tooltip" title="@lang('laryl.tooltips.edit')">
 															@lang('laryl.buttons.edit')
 														</a>
 
-												</td> -->
+												</td>
 											</tr>											
 										@endforeach
 									@else 

@@ -209,19 +209,20 @@ class DepositsController extends Controller
 	 */
 	public function edit($id)
 	{
-		$deposit = Deposit::with('customer', 'product')->find($id);
+		$accounts = Account::get();
+		$deposit = Deposit::with('accounts')->find($id);
 
-		$profileSettings = ProfileSetting::find(1);
+/*		$profileSettings = ProfileSetting::find(1);
 		$deposit['profile'] = $profileSettings;
 
 		$depositSettings = DepositSetting::find(1);
-		$deposit['deposit'] = $depositSettings;
+		$deposit['deposit'] = $depositSettings;*/
 
 		$deposit = (object) $deposit;
 
 		clock($deposit);
 
-		return view('backend.deposits.edit_deposit', compact('deposit'));
+		return view('backend.deposits.edit_deposit', compact('deposit','accounts'));
 	}
 
 	/**
@@ -233,52 +234,64 @@ class DepositsController extends Controller
 	 */
 	public function update(Request $request, $id)
 	{
-		$attributeNames = array(
-			'customer.name' => 'Customer Name',
-			'customer.mobile' => 'Customer Mobile',
-			'depositProducts.*.description' => 'deposit product description',
-		 );
-		
+		clock($request->all());
+
 		$rules = array(
-			'placeOfSupply'				=> 'required',
-			'customer.name'				=> 'required',
-			'customer.mobile'			=> 'required|regex:/\+91[[:space:]]\d{10}/',
-			'depositProducts.*.description'	=> 'required',
+			'date'				=> 'required',
+			'account_id'		=> 'required',
+			'amount'			=> 'required',
+			/*'description'		=> 'required',
+			'chequeNo'			=> 'required',
+			'ref'				=> 'required',
+			'person'			=> 'required',*/
 		);
 
 		$validator = Validator::make($request->all(), $rules);
-		$validator->setAttributeNames($attributeNames);
-
 		if ($validator->fails()) {
 
-			return Response::json(array(
-				'status' => 0,
-				'errors' => $validator->errors()
-			), 400);
+			toast('Rectify errors and re-submit!','error','top-right')->autoclose(3500);
+
+            return Redirect::to('deposits/create')
+                ->withErrors($validator)
+                ->withInput($request->input());
 
 		} else {
+			$depositData = $request->except('_token', '_method');
+			$deposit = Deposit::find($id);
+			$preAmount = $deposit->amount;
+			$curAmount = $request->amount;
+			$prevAccountId = $deposit->account_id;
+			$curAccountId = $request->account_id;
+			if($prevAccountId==$curAccountId){
+				$prevAccount = Account::find($prevAccountId);
+				$prevAccount->balance = $prevAccount->balance-$preAmount+$curAmount;
+				$prevAccount->save();
+			} else{
+				$curAccount = Account::find($curAccountId);
+				$curAccount->balance = $curAccount->balance+$curAmount;
+				$curAccount->save();
 
-			$depositData = $request->except('customer', 'depositProducts', '_token', '_method');
-			$depositCustomerData = $request->input('customer');
-			$depositProductsData = $request->input('depositProducts');
-
-			$deposit = Deposit::with('customer')->find($id);
-
+				$prevAccount = Account::find($prevAccountId);
+				$prevAccount->balance = $prevAccount->balance-$preAmount;
+				$prevAccount->save();
+			}
 			Deposit::whereId($id)->update($depositData);
 
-			$deposit->customer->update($depositCustomerData);
 
-			foreach($depositProductsData as $depositProduct){
-				$deposit->product()->where('depositSerial', $depositProduct['depositSerial'])->updateOrCreate(['deposit_id' => $deposit['id'], 'depositSerial' => $depositProduct['depositSerial']], $depositProduct);
+			$transactionData['payeeid'] = $request->account_id;
+			$transactionData['account'] = $deposit->accounts->accountName;
+            // $transactionData['type'] = 'Deposit';
+            // $transactionData['typeId'] = $deposit->id;
+            $transactionData['amount'] = $request->amount;
+            $transactionData['description'] = $request->description;
+            $transactionData['date'] = $request->date;
+            $transactionData['cr'] = $request->amount;
+            $transactionData['bal'] = $deposit->accounts->balance;
+            $transaction = Transaction::where('typeId',$id)->where('type','Deposit')->update($transactionData);
+            
+			toast('Deposit updated Successfully!','success','top-right')->autoclose(3500);
+            return Redirect::to('deposits/');
 
-				$depositProductIds[] = $depositProduct['depositSerial'];
-			}
-
-			$deleteMissingProducts = DepositProduct::where('deposit_id', $deposit['id'])
-						->whereNotIn('depositSerial', $depositProductIds)
-						->delete();
-
-			return Response::json(array('status' => 1), 200);
 		}
 	}
 

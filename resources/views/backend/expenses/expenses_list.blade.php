@@ -30,6 +30,7 @@
 										<th> @lang('laryl-expenses.table.chequeNo') </th>
 										<th> @lang('laryl-expenses.table.ref') </th>
 										<th> @lang('laryl-expenses.table.person') </th>
+										<th> @lang('laryl-expenses.table.options') </th>
 									</tr>
 								</thead>
 								<tbody>
@@ -50,17 +51,11 @@
 												<td class="t-cap">{{$expense['chequeNo']}}</td>
 												<td class="t-cap">{{$expense['ref']}}</td>
 												<td class="t-cap">{{$expense['person']}}</td>
-												<!-- <td>
-
-														<a class="btn btn-sm btn-success mb-2 mb-sm-0" href="{{ route('Expenses.expenses.show', $expense['id'])  }}" data-toggle="tooltip" title="@lang('laryl.tooltips.show')">
-															@lang('laryl.buttons.show')
-														</a>
-
-														<a class="btn btn-sm btn-warning mb-2 mb-sm-0" href="{{ route('Expenses.expenses.edit', $expense['id'])  }}" data-toggle="tooltip" title="@lang('laryl.tooltips.edit')">
-															@lang('laryl.buttons.edit')
-														</a>
-
-												</td> -->
+												<td>
+													<a class="btn btn-sm btn-warning mb-2 mb-sm-0" href="{{ route('Expenses.expenses.edit', $expense['id'])  }}" data-toggle="tooltip" title="@lang('laryl.tooltips.edit')">
+														@lang('laryl.buttons.edit')
+													</a>
+												</td>
 											</tr>
 
 											@php $i++; @endphp
