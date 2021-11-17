@@ -440,6 +440,7 @@ class InvoicesController extends Controller
 			$pdf = PDF::loadView('backend.invoiceTemplates.DC', $invoice);
 			return $pdf->stream($invoice['serialPrefix'].$invoice['serialNumber'].'_'.ucfirst($copy).'.pdf');
 		} else {
+			dd($invoice);
 			$pdf = PDF::loadView('backend.invoiceTemplates.template1', $invoice);
 			return $pdf->stream($invoice['serialPrefix'].$invoice['serialNumber'].'_'.ucfirst($copy).'.pdf');
 		}
