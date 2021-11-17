@@ -145,40 +145,43 @@
 					</tr>
 				</thead>
 				<tbody>
-					@foreach($product as $prod)
-					<tr class="product_row">
-						<td>{{$prod['invoiceSerial']}}</td>
-						<td>{{$prod['description']}}</td>
-						<td>{{$prod['hsn']}}</td>
-						<td>{{$prod['quantity']}} {{$prod['unit']}}</td>
-						<td>{{$prod['saleValue']}}</td>
-						@if ($discountType === 'discountrate')
-						<td>
-							{{$prod['discountRate']}}
-						</td>
-						@else
-						<td>
-							{{$prod['discountValue']}}
-						</td>
-						@endif
-						<td>{{$prod['taxableValue']}}</td>
-						<!-- <td>{{$prod['igstValue']}}<br />({{$prod['igstRate']}})</td> -->
-						<td>{{$prod['cgstValue']}}<br />({{$prod['cgstRate']}})</td>
-						<td>{{$prod['sgstValue']}}<br />({{$prod['sgstRate']}})</td>
-						<!-- <td>{{$prod['cessValue']}}<br />({{$prod['cessRate']}})</td> -->
-						<td>{{$prod['grossValue']}}</td>
-					</tr> 
-					@endforeach
+					@if(isset($product))
+						@foreach($product as $prod)
+						<tr class="product_row">
+							<td>{{$prod['invoiceSerial']}}</td>
+							<td>{{$prod['description']}}</td>
+							<td>{{$prod['hsn']}}</td>
+							<td>{{$prod['quantity']}} {{$prod['unit']}}</td>
+							<td>{{$prod['saleValue']}}</td>
+							@if ($discountType === 'discountrate')
+							<td>
+								{{$prod['discountRate']}}
+							</td>
+							@else
+							<td>
+								{{$prod['discountValue']}}
+							</td>
+							@endif
+							<td>{{$prod['taxableValue']}}</td>
+							<!-- <td>{{$prod['igstValue']}}<br />({{$prod['igstRate']}})</td> -->
+							<td>{{$prod['cgstValue']}}<br />({{$prod['cgstRate']}})</td>
+							<td>{{$prod['sgstValue']}}<br />({{$prod['sgstRate']}})</td>
+							<!-- <td>{{$prod['cessValue']}}<br />({{$prod['cessRate']}})</td> -->
+							<td>{{$prod['grossValue']}}</td>
+						</tr> 
+						@endforeach
+					@endif
 					@php
-					if(count($product)>8)  $height = 50;
-					if(count($product)==8) $height = 160;
-					if(count($product)==7) $height = 180;
-					if(count($product)==6) $height = 200;
-					if(count($product)==5) $height = 220;
-					if(count($product)==4) $height = 240;
-					if(count($product)==3) $height = 260;
-					if(count($product)==2) $height = 280;
-					if(count($product)==1) $height = 300;
+					$height = 300;
+					if(isset($product) && count($product)>8)  $height = 50;
+					if(isset($product) && count($product)==8) $height = 160;
+					if(isset($product) && count($product)==7) $height = 180;
+					if(isset($product) && count($product)==6) $height = 200;
+					if(isset($product) && count($product)==5) $height = 220;
+					if(isset($product) && count($product)==4) $height = 240;
+					if(isset($product) && count($product)==3) $height = 260;
+					if(isset($product) && count($product)==2) $height = 280;
+					if(isset($product) && count($product)==1) $height = 300;
 					@endphp
 					<tr class="product_row">
 						<td height="{{$height}}px"></td>
